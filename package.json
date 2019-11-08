@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/SunilSwarna/CS546-B-Project/issues"
   },
-  "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme"
+  "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme",
+  "dependencies": {
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.3",
+    "password-hash": "^1.2.2"
+  }
 }
