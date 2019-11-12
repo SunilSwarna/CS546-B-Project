@@ -12,7 +12,7 @@ function emailIsValid(email) {
 const createUser = async function createUser(sessionID, name, email, password) {
     if (!name || typeof name !== 'string') throw "Pleas enter valid name.";
     if (!email || !emailIsValid(email)) throw "Pleas enter valid email.";
-    if (!password || typeof password !== 'string' || password.length < 5) throw "Please enter valid password.";
+    if (!password || typeof password !== 'string' || password.length < 6) throw "Please enter valid password.";
     if (!sessionID) throw "No session ID provided.";
 
     const usersCollection = await usersData();
