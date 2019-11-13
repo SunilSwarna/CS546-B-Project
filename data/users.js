@@ -32,6 +32,22 @@ const createUser = async function createUser(sessionID, name, email, password) {
 
 }
 
+const getAll = async function getAll() {
+    const usersCollection = await usersData();
+
+    const userAll = await usersCollection.find({}).toArray();
+
+    const resultArr = [];
+    for (element of userAll) {
+        resultArr.push(await this.get(element._id.toString()));
+    }
+    return resultArr;
+}
+
+
+
+
 module.exports = {
-    createUser
+    createUser,
+    getAll
 }

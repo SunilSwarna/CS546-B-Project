@@ -23,7 +23,11 @@ const createNotes = async function createNotes(userID, title, content) {
     if (insertInfo.insertedCount === 0) throw "Could not add user";
 }
 
-const findNote = async function findNote()
+const findNote = async function findNote(latitute, longitude, radius)
+{
+    
+}
 module.exports = {
-    createNotes
+    createNotes,
+    findNote
 }
