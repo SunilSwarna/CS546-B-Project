@@ -1,0 +1,76 @@
+
+.is-prime
+{
+    color: #00E676;
+}
+
+.not-prime
+{
+    color: #FF3D00;
+}   
+
+
+label {
+    font-weight: bold;
+    padding: 12px 20px;
+    width: 100%;
+  }
+
+input[type=Number], select {
+width: 100px;
+padding: 12px 20px;
+margin: 8px 0;
+border: 2px solid #ccc;
+}
+
+
+  h1,
+  h2 {
+  color: burlywood;
+  margin-bottom: 4px;
+  text-align: center;
+  }
+
+  
+  .button {
+    width: 100px;
+    background-color: green;
+    color: white;
+    padding: 12px 20px;
+  }
+    
+    .error{
+    color: #ff5e00;
+    font-size: 16px;
+    margin-left: 10px;;
+  }
+
+    #form
+    {
+      margin-top: 5%;
+    }
+
+
+  footer{
+    border: 2px solid red;
+    bottom: 5px;
+    position: fixed;    
+    width: 100%;
+  }
+
+  #foot{
+        font-size: 18px;
+        line-height: 1.5;
+  }
+
+  .id{
+      margin-left: 15%; 
+  }
+
+  .section{
+      margin-left: 15%; 
+  }
+
+    .major{
+      margin-left: 15%;
+    }
