@@ -1,15 +1,4 @@
 
-.is-prime
-{
-    color: #00E676;
-}
-
-.not-prime
-{
-    color: #FF3D00;
-}   
-
-
 label {
     font-weight: bold;
     padding: 12px 20px;
@@ -50,18 +39,12 @@ border: 2px solid #ccc;
       margin-top: 5%;
     }
 
-
-  footer{
+  header{
     border: 2px solid red;
-    bottom: 5px;
-    position: fixed;    
     width: 100%;
   }
 
-  #foot{
-        font-size: 18px;
-        line-height: 1.5;
-  }
+ 
 
   .id{
       margin-left: 15%; 
@@ -73,4 +56,24 @@ border: 2px solid #ccc;
 
     .major{
       margin-left: 15%;
+    }
+
+
+  
+
+    #page-container {
+      position: relative;
+      min-height: 90vh;
+    }
+    
+    #content-wrap {
+      padding-bottom: 2.5rem;    /* Footer height */
+    }
+    
+    #footer {
+      border: 2px solid red;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 2.5rem;            /* Footer height */
     }
