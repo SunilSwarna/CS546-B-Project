@@ -1,0 +1,79 @@
+
+label {
+    font-weight: bold;
+    padding: 12px 20px;
+    width: 100%;
+  }
+
+input[type=Number], select {
+width: 100px;
+padding: 12px 20px;
+margin: 8px 0;
+border: 2px solid #ccc;
+}
+
+
+  h1,
+  h2 {
+  color: burlywood;
+  margin-bottom: 4px;
+  text-align: center;
+  }
+
+  
+  .button {
+    width: 100px;
+    background-color: green;
+    color: white;
+    padding: 12px 20px;
+  }
+    
+    .error{
+    color: #ff5e00;
+    font-size: 16px;
+    margin-left: 10px;;
+  }
+
+    #form
+    {
+      margin-top: 5%;
+    }
+
+  header{
+    border: 2px solid red;
+    width: 100%;
+  }
+
+ 
+
+  .id{
+      margin-left: 15%; 
+  }
+
+  .section{
+      margin-left: 15%; 
+  }
+
+    .major{
+      margin-left: 15%;
+    }
+
+
+  
+
+    #page-container {
+      position: relative;
+      min-height: 90vh;
+    }
+    
+    #content-wrap {
+      padding-bottom: 2.5rem;    /* Footer height */
+    }
+    
+    #footer {
+      border: 2px solid red;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 2.5rem;            /* Footer height */
+    }
