@@ -13,7 +13,7 @@ const createUser = async function createUser(sessionID, firstName, lastName, ema
     if (!firstName || typeof firstName !== 'string') throw "Pleas enter valid first name.";
     if (!lastName || typeof lastName !== 'string') throw "Pleas enter valid first name.";
     if (!email || !emailIsValid(email)) throw "Pleas enter valid email.";
-    if (!password || typeof password !== 'string') throw "Please enter valid password.";
+    if (!password || typeof password !== 'string' || password < 5) throw "Please enter valid password.";
     if (!sessionID) throw "No session ID provided.";
 
     const usersCollection = await usersData();
