@@ -1,10 +1,10 @@
 <div class="bs-example">
     <h1 class="border-bottom pb-3 mb-4">Registration Form</h1>
-    <form class="needs-validation" action="/signup" method="post" novalidate>
+    <form class="needs-validation" action="/signup" method="post">
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="fullName">Full Name:</label>
             <div class="col-lg-4">
-                <input type="text" class="form-control" id="fullName" placeholder="Full Name" required>
+                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name" required>
             </div>
             <div class="col-sm-3">
                 <small id="validatefullName" class="text-danger">     
@@ -15,7 +15,7 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="inputEmail">Email Address:</label>
             <div class="col-lg-4">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" required>
+                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email Address" required>
             </div>
             <div class="col-sm-3">
                 <small id="validateEmail" class="text-danger">     
@@ -25,7 +25,7 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="password">Password:</label>
             <div class="col-lg-4">
-                <input type="password" class="form-control" data-minlength="5" id="password" placeholder="******" required>
+                <input type="password" class="form-control" data-minlength="5" name="password" id="password" placeholder="******" required>
             </div>
             <div class="col-sm-3">
                 <small id="passwordHelp" class="text-danger">     
@@ -35,7 +35,7 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="confirmPassword">Confirm Password:</label>
             <div class="col-lg-4">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="******" required>
+                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="******" required>
             </div>
             <div class="col-sm-3">
                 <small id="confirmPasswordHelp" class="text-danger">     
@@ -52,4 +52,5 @@
         </div>
     </form>
 </div>
+<div>{{error}}</div>
 <script src="js/signup.js"></script>

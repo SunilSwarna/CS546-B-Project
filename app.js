@@ -1,9 +1,11 @@
 const express = require("express");
+var cookieParser = require('cookie-parser');
 const app = express();
 const static = express.static(__dirname + "/public");
 
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
+app.use(cookieParser());
 app.use(static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

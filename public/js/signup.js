@@ -1,27 +1,3 @@
-// (function () {
-//     // 'use strict';
-//     $("#passwordHelp").hide();
-//     window.addEventListener('load', function () {
-//         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-//         var forms = document.getElementsByClassName('needs-validation');
-//         // Loop over them and prevent submission
-//         var validation = Array.prototype.filter.call(forms, function (form) {
-
-//     // var password = document.getElementById("password").value
-//     // var confirmPassword = document.getElementById("confirmPassword").value
-//             form.addEventListener('submit', function (event) {
-
-//                 if (form.checkValidity() === false) {
-//                     console.log(forms)
-//                     event.preventDefault();
-//                     event.stopPropagation();
-//                 }
-//                 form.classList.add('was-validated');
-//             }, false);
-//         });
-//     }, false);
-// })();
-
 $("#passwordHelp").hide();
 $("#confirmPasswordHelp").hide();
 $("#validatefullName").hide();
@@ -87,9 +63,7 @@ submit.addEventListener("click", (event) => {
             $("#confirmPasswordHelp").show();
             document.getElementById("confirmPasswordHelp").innerHTML = "Min Length of  Password is 5!";
         }
-        else {
-        }
     }
-}, true);
+});
 
 
