@@ -28,10 +28,16 @@
 
 
         <div class="form-group row">
-            <div class="col-lg-4 offset-sm-3">
+            <div class="col-lg-1 offset-sm-2">
                 <input id="login" type="submit" class="btn btn-primary" value="Login">
             </div>
+            <p class="col-lg-4 offset-sm-1">
+             New User ?
+            <a class="btn btn-success" href="/signup">Create Account</a>
+        </p>
         </div>
     </form>
 </div>
-{{!-- <script src="js/signup.js"></script> --}}
+
+<div>{{error}}</div>
+<script src="js/login.js"></script>

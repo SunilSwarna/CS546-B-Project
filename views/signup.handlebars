@@ -2,12 +2,23 @@
     <h1 class="border-bottom pb-3 mb-4">Registration Form</h1>
     <form class="needs-validation" action="/signup" method="post">
         <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="fullName">Full Name:</label>
+            <label class="col-lg-2 col-form-label" for="firstName">Full Name:</label>
             <div class="col-lg-4">
-                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name" required>
+                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name"
+                    required>
             </div>
             <div class="col-sm-3">
-                <small id="validatefullName" class="text-danger">     
+                <small id="validatefirstName" class="text-danger">
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="lastName">Last Name:</label>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name" required>
+            </div>
+            <div class="col-sm-3">
+                <small id="validatelastName" class="text-danger">
                 </small>
             </div>
         </div>
@@ -15,30 +26,33 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="inputEmail">Email Address:</label>
             <div class="col-lg-4">
-                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email Address" required>
+                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email Address"
+                    required>
             </div>
             <div class="col-sm-3">
-                <small id="validateEmail" class="text-danger">     
+                <small id="validateEmail" class="text-danger">
                 </small>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="password">Password:</label>
             <div class="col-lg-4">
-                <input type="password" class="form-control" data-minlength="5" name="password" id="password" placeholder="******" required>
+                <input type="password" class="form-control" data-minlength="5" name="password" id="password"
+                    placeholder="******" required>
             </div>
             <div class="col-sm-3">
-                <small id="passwordHelp" class="text-danger">     
+                <small id="passwordHelp" class="text-danger">
                 </small>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="confirmPassword">Confirm Password:</label>
             <div class="col-lg-4">
-                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="******" required>
+                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                    placeholder="******" required>
             </div>
             <div class="col-sm-3">
-                <small id="confirmPasswordHelp" class="text-danger">     
+                <small id="confirmPasswordHelp" class="text-danger">
                 </small>
             </div>
         </div>
@@ -46,11 +60,17 @@
 
         <div class="form-group row">
             <div class="col-lg-4 offset-sm-3">
-                <input id="login" type="submit" class="btn btn-primary" value="Submit">
+                <input id="login" type="submit" class="btn btn-primary" value="SIGN UP">
                 <input type="reset" class="btn btn-secondary" value="Reset">
             </div>
         </div>
     </form>
+    <div class="form-group row">
+        <p class="col-lg-4 offset-sm-3">
+            Already have an account ?
+            <a class="btn btn-primary" href="/login" class="link">Login here</a>
+        </p>
+    </div>
 </div>
 <div>{{error}}</div>
 <script src="js/signup.js"></script>

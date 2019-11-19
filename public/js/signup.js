@@ -1,6 +1,7 @@
 $("#passwordHelp").hide();
 $("#confirmPasswordHelp").hide();
-$("#validatefullName").hide();
+$("#validatefirstName").hide();
+$("#validatelastName").hide();
 $("#validateEmail").hide();
 var submit = document.getElementById("login");
 
@@ -9,16 +10,24 @@ submit.addEventListener("click", (event) => {
 
     $("#passwordHelp").hide();
     $("#confirmPasswordHelp").hide();
-    $("#validatefullName").hide();
+    $("#validatefirstName").hide();
+    $("#validatelastName").hide();
     $("#validateEmail").hide();
 
-    var fullname = document.getElementById("fullName").value
+    var firstName = document.getElementById("firstName").value
+    var lastName = document.getElementById("lastName").value
     var email = document.getElementById("inputEmail").value
 
-    if (!fullname) {
+    if (!firstName) {
         event.preventDefault();
-        $("#validatefullName").show();
-        document.getElementById("validatefullName").innerHTML = "Name field  is required!";
+        $("#validatefirstName").show();
+        document.getElementById("validatefirstName").innerHTML = "First Name field  is required!";
+    }
+
+    if (!lastName) {
+        event.preventDefault();
+        $("#validatelastName").show();
+        document.getElementById("validatelastName").innerHTML = "Last Name field  is required!";
     }
 
     if (!email) {

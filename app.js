@@ -1,7 +1,15 @@
 const express = require("express");
 var cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
 const static = express.static(__dirname + "/public");
+
+app.use(session({
+    name: 'AuthCookie',
+    secret: 'piedPiper!',
+    resave: false,
+    saveUninitialized: true
+}))
 
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");

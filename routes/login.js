@@ -23,4 +23,18 @@ router.get('/', loginMiddleware, async (req, res) => {
     }
 })
 
+router.post('/', async (req, res) => {
+    try 
+    {   
+        if (!req.body) return res.status(400).render("login", { error: "Bad Request" });
+        if (!req.body.inputEmail || !req.body.password ) {
+            return res.status(400).render("login", { error: "One of the fileds is missing" })
+        }
+    }
+    catch(e) 
+    {    
+        return res.status(404).render("signup", { error: e })    
+    }
+})
+
 module.exports = router
