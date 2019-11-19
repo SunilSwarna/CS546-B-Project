@@ -22,15 +22,18 @@ router.post('/', async (req, res) => {
 
     try {
         if (!req.body) return res.status(400).render("signup", { error: "Bad Request" });
-        if (!req.body.fullName || !req.body.inputEmail || !req.body.password || !req.body.confirmPassword) {
+        if (!req.body.firstName || !req.body.lastName || !req.body.inputEmail || !req.body.password || !req.body.confirmPassword) {
             return res.status(400).render("signup", { error: "One of the fileds is missing" })
         }
-        await data.users.createUser("123", req.body.fullName, "sample", req.body.inputEmail, req.body.password);
-        res.cookie("userData", {"message":req.body.fullName+" is Successfully Signed up!"}); 
+        if (req.body.password != req.body.confirmPassword) {
+            return res.status(400).render("signup", { error: "Passwords do not match!" })
+        }
+        await data.users.createUser("123", req.body.firstName, req.body.lastName, req.body.inputEmail.toLowerCase(), req.body.password);
+        res.cookie("userData", {"message":req.body.firstName+" is Successfully Signed up!"}); 
         return res.redirect("/login")
     }
     catch (e) {
-        return res.status(400).render("signup", { error: e })
+        return res.status(404).render("signup", { error: e })
     }
     // res.redirect('/signup')
 })
