@@ -18,7 +18,7 @@ const createUser = async function createUser(sessionID, firstName, lastName, ema
 
     const usersCollection = await usersData();
     var hashedPassword = passwordHash.generate(password);
-    const userFound = await usersCollection.find({ 'email': email }).toArray();
+    const userFound = await usersCollection.find({ 'email': email.toLowerCase()}).toArray();
     if (userFound.length != 0) throw "User already exists.";
     const userInfo = {
         sessionID: sessionID,
