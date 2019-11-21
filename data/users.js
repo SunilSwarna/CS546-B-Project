@@ -1,7 +1,9 @@
 const mongoCollections = require("../config/mongoCollections");
 const usersData = mongoCollections.users;
 var validator = require("email-validator");
-var passwordHash = require('password-hash');
+var bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(10);
+
 
 function emailIsValid(email) {
     return validator.validate(email);
@@ -9,19 +11,17 @@ function emailIsValid(email) {
 
 
 
-const createUser = async function createUser(sessionID, firstName, lastName, email, password) {
+const createUser = async function createUser(firstName, lastName, email, password) {
     if (!firstName || typeof firstName !== 'string') throw "Pleas enter valid first name.";
     if (!lastName || typeof lastName !== 'string') throw "Pleas enter valid first name.";
     if (!email || !emailIsValid(email)) throw "Pleas enter valid email.";
     if (!password || typeof password !== 'string' || password < 5) throw "Please enter valid password.";
-    if (!sessionID) throw "No session ID provided.";
 
     const usersCollection = await usersData();
-    var hashedPassword = passwordHash.generate(password);
-    const userFound = await usersCollection.find({ 'email': email }).toArray();
+    var hashedPassword = bcrypt.hashSync(password, salt);
+    const userFound = await usersCollection.find({ 'email': email.toLowerCase() }).toArray();
     if (userFound.length != 0) throw "User already exists.";
     const userInfo = {
-        sessionID: sessionID,
         password: hashedPassword,
         firstName: firstName,
         lastName: lastName,
@@ -38,12 +38,24 @@ const getAll = async function getAll() {
     const usersCollection = await usersData();
 
     const userAll = await usersCollection.find({}).toArray();
+    return userAll;
+}
 
-    const resultArr = [];
-    for (element of userAll) {
-        resultArr.push(await this.get(element._id.toString()));
+const checkUser = async function checkUser(email, password) {
+    if (!email || !emailIsValid(email)) throw 'Invalid email';
+    if (!password || password < 5) throw 'Password not provided correctly';
+
+    const allUserData = await this.getAll();
+    let checkValidUser = false;
+    for (var i = 0; i < allUserData.length; i++) {
+        if (allUserData[i].email === email) {
+            var checkPassword = await bcrypt.compareSync(password, allUserData[i].password);
+            if (checkPassword) {
+                checkValidUser = true;
+            }
+        }
     }
-    return resultArr;
+    return checkValidUser;
 }
 
 
@@ -51,5 +63,6 @@ const getAll = async function getAll() {
 
 module.exports = {
     createUser,
-    getAll
+    getAll,
+    checkUser
 }

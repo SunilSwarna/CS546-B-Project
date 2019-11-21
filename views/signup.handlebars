@@ -38,7 +38,7 @@
             <label class="col-lg-2 col-form-label" for="password">Password:</label>
             <div class="col-lg-4">
                 <input type="password" class="form-control" data-minlength="5" name="password" id="password"
-                    placeholder="******" required>
+                    placeholder="Password" required>
             </div>
             <div class="col-sm-3">
                 <small id="passwordHelp" class="text-danger">
@@ -49,7 +49,7 @@
             <label class="col-lg-2 col-form-label" for="confirmPassword">Confirm Password:</label>
             <div class="col-lg-4">
                 <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
-                    placeholder="******" required>
+                    placeholder="Confirm Password" required>
             </div>
             <div class="col-sm-3">
                 <small id="confirmPasswordHelp" class="text-danger">
@@ -68,9 +68,9 @@
     <div class="form-group row">
         <p class="col-lg-4 offset-sm-3">
             Already have an account ?
-            <a class="btn btn-success" href="/login" class="link">Login here</a>
+            <a class="btn btn-success" href="/" class="link">Login here</a>
         </p>
     </div>
 </div>
-<div>{{error}}</div>
+<div class = "error">{{error}}</div>
 <script src="js/signup.js"></script>

@@ -8,32 +8,30 @@ const loginMiddleware = (req, res, next) => {
     next()
 };
 
-router.get('/', loginMiddleware, async (req, res) => {
+router.get('/', loginMiddleware, async(req, res) => {
     try {
-        res.render("signup", {});
-    }
-    catch (e) {
+        res.render("signup", { title: "Signup Page" });
+    } catch (e) {
         res.status(404).json({ "error": "Couldn't load page" });
     }
 })
 
 
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
 
     try {
-        if (!req.body) return res.status(400).render("signup", { error: "Bad Request" });
+        if (!req.body) return res.status(400).render("signup", { title: "Signup Page", error: "Bad Request" });
         if (!req.body.firstName || !req.body.lastName || !req.body.inputEmail || !req.body.password || !req.body.confirmPassword) {
-            return res.status(400).render("signup", { error: "One of the fileds is missing" })
+            return res.status(400).render("signup", { title: "Signup Page", error: "One of the fileds is missing" })
         }
         if (req.body.password != req.body.confirmPassword) {
-            return res.status(400).render("signup", { error: "Passwords do not match!" })
+            return res.status(400).render("signup", { title: "Signup Page", error: "Passwords do not match!" })
         }
-        await data.users.createUser("123", req.body.firstName, req.body.lastName, req.body.inputEmail.toLowerCase(), req.body.password);
-        res.cookie("userData", {"message":req.body.firstName+" is Successfully Signed up!"}); 
-        return res.redirect("/login")
-    }
-    catch (e) {
-        return res.status(404).render("signup", { error: e })
+        await data.users.createUser(req.body.firstName, req.body.lastName, req.body.inputEmail.toLowerCase(), req.body.password);
+        res.cookie("userData", { "message": req.body.firstName + " is Successfully Signed up!" });
+        return res.redirect("/");
+    } catch (e) {
+        return res.status(404).render("signup", { title: "Signup Page", error: e })
     }
     // res.redirect('/signup')
 })
