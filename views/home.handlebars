@@ -1,9 +1,19 @@
+<div id="page-container">
+  <nav>
+    <header>
+      <a href="/" class="id">Home</a>
+      <a href="/friends" class="id"> Friends</a>
+      <a href="/addPost" class="id">Add Post</a>
+      <a href="/logout" class="id">logout</a>
+    </header>
+  </nav>
+</div>
 {{#if allNotes.length}}
 <ul>
   {{#each allNotes}}
   <li>
     {{this.title}}
-    {{this.content}} 
+    {{this.content}}
   </li>
   {{/each}}
 </ul>

@@ -3,10 +3,17 @@ const router = express.Router();
 const data = require("../data");
 const notes = data.notes;
 
-router.get('/', async(req, res) => {
+const loginMiddleware = (req, res, next) => {
+    if (!req.session.logged) {
+        res.status(403).render("login", { title: "Login Page", error: "Access denied." });
+    } else {
+        next();
+    }
+}
+router.get('/', loginMiddleware, async(req, res) => {
     try {
         const notesAll = await notes.getAllNotes();
-        res.render("home", { allNotes: notesAll });
+        res.render("home", { title: "Pied Piper", allNotes: notesAll });
     } catch (e) {
         res.status(404).json({ "error": "Couldn't load page" });
     }
