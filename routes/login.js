@@ -4,6 +4,9 @@ const data = require('../data')
 
 const loginMiddleware = (req, res, next) => {
     req.loginMessage = undefined
+    if(req.session.logged){
+        return res.redirect("/home");
+    }
     if (req.cookies.userData) {
         req.loginMessage = req.cookies.userData.message
         res.clearCookie("userData")
