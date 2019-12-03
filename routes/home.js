@@ -11,8 +11,11 @@ const loginMiddleware = (req, res, next) => {
     }
 }
 router.get('/', loginMiddleware, async(req, res) => {
+    var latitute = 44.5235792;
+    var longitude = -89.574563;
+    var radius = 5;
     try {
-        const notesAll = await notes.getAllNotes();
+        const notesAll = await notes.findNotes(latitute, longitude, radius);
         res.render("home", { title: "Pied Piper", allNotes: notesAll });
     } catch (e) {
         res.status(404).json({ "error": "Couldn't load page" });

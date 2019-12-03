@@ -29,8 +29,9 @@ app.listen(3000, () => {
 });
 
 
+
 // const user = require("./data/users");
-// const notes = require("./data/notes")
+// const notes = require("./data/notes");
 // const connection = require("./config/mongoConnection");
 // async function main() {
 // try {
@@ -55,11 +56,11 @@ app.listen(3000, () => {
 //     console.error(error);
 // }
 
-//     try {
-//         await notes.createNotes("5dd20354faabf50a9d241ae5", "First title", "First content");
-//     } catch (error) {
-//         console.error(error);
-//     }
+// try {
+//     await notes.createNotes("5de5d7823d33ea0926f36f87", "First title", "First content");
+// } catch (error) {
+//     console.error(error);
+// }
 //     try {
 //         await notes.createNotes("5dd20354faabf50a9d241ae5", "Second title", "First content");
 //     } catch (error) {
@@ -75,6 +76,8 @@ app.listen(3000, () => {
 //     } catch (error) {
 //         console.error(error);
 //     }
+
+//     console.log(await notes.findNotes(44.5235792, -89.574563, 5));
 //     const db = await connection();
 //     await db.serverConfig.close();
 // }
