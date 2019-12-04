@@ -33,9 +33,10 @@ app.listen(3000, () => {
 // const user = require("./data/users");
 // const notes = require("./data/notes");
 // const comments = require("./data/comments");
+// const friends = require("./data/friends")
 // const connection = require("./config/mongoConnection");
 // async function main() {
-// try {
+//try {
 //     await user.createUser(1, "Kunj", "Desai", "KunjDesai@gmail.com", "kunj");
 // } catch (error) {
 //     console.error(error);
@@ -84,6 +85,16 @@ app.listen(3000, () => {
 //     }
 
 //console.log(await notes.findNotes(44.5235792, -89.574563, 5));
+// try {
+//     await friends.removeFriend("5de72a0163e01e0edee0ed2a", "5de72a0163e01e0edee0ed29", "5de72a1b63e01e0edee0ed2b");
+// } catch (error) {
+//     console.error(error);
+// }
+//     try {
+//         await friends.searchName("k");
+//     } catch (error) {
+//         console.error(error);
+//     }
 //     const db = await connection();
 //     await db.serverConfig.close();
 // }
