@@ -31,8 +31,9 @@ router.post('/', async(req, res) => {
             return res.status(400).render("login", { error: "One of the fileds is missing" })
         }
         const foundUser = await data.users.checkUser(req.body.inputEmail, req.body.password);
-        if (foundUser) {
+        if (foundUser.checkValidUser) {
             req.session.logged = true;
+            req.session.userInfo = foundUser.userInfo
             res.redirect("/home");
         } else {
             throw "Email or password not correct.";

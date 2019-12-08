@@ -1,31 +1,73 @@
-<h1 class="border-bottom pb-3 mb-4">Friend Request</h1>
-<div>
-    <div class="col-4">
-        <form class="form-inline my-2 my-lg-0">
-            <div>
-                <input style="margin-left:5em;" class="form-control col" type="search" placeholder="Search"
-                    aria-label="Search">
+<div style="margin-top: 20px;">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-5 ">
+            <div class="card">
+                <div class="card-header">
+                    Featured
+                    <div class="d-flex">
+                        <input id="search" class="form-control col" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <button class="btn btn-info ml-2" type="submit" id="searchFriends">Search</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-10">
+
+
+                        <div id="loading" class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div id="friendMsg">
+                            all text goes here
+                        </div>
+                        <ul id="listfriends" class="list-group">
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-info" type="submit">Search</button>
-        </form>
-    </div>
-    <div class="w-100"></div>
-    <div class="col-6 col-sm-1"></div>
-    <div class="col-6 col-sm-3 offset-md-5">
-        {{!-- <div style="height: 300px;border-left: 2px solid black;position: absolute;" class="vertical"></div> --}}
-        <h1 class="border-bottom pb-3 mb-4">Friend Suggestions</h1>
-        <p style="display:inline-flexbox">
-            <span style="font-size: 28px;top:9px" class="glyphicon glyphicon-user"></span>
-            <a class="btn btn-success"><span class="glyphicon glyphicon-ok" btn-sm></span></a>
-            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+        <div class="col-sm-6 flex-fill">
+            <div class="card">
+                <div class="card-header">
+                    Friend Suggestions
+                </div>
+                <div>
 
-        </p>
-        <p style="display:inline-flexbox">
-            <span style="font-size: 28px;top:9px" class="glyphicon glyphicon-user"></span>
-            <a class="btn btn-success"><span class="glyphicon glyphicon-ok" btn-sm></span></a>
-            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    {{#if showFrds}}
+                    {{#each frds}}
+                    <p style="display:inline-flexbox">
+                        <span style="top:9px;display: inline-block;"
+                            class="glyphicon glyphicon-user">{{this.name}}</span>
+                        <button style="font-size:9px" type="button" onClick="accept_friend(this, {{this.userId}})" class="btn btn-success"><span
+                                class="glyphicon glyphicon-ok"></span></button>
+                        <button style="font-size:9px" type="button" onClick="delete_friend(this, {{this.userId}})" class="btn btn-danger"><span
+                                class="glyphicon glyphicon-remove"></span></button>
 
-        </p>
+                    </p>
+                    {{/each}}
 
+                    {{else}}
+                    <div>No new requests</div>
+                    {{/if}}
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+<script src="js/friends.js"></script>
+
+{{!-- 
+<div class="row align-items-center">
+           <div class="col-6">
+                <div class="card card-block">
+                 Center
+                </div>
+           </div>
+           <div class="col-6">
+                <div class="card card-inverse card-danger">
+                    Taller
+                </div>
+          </div>
+    </div> --}}
