@@ -1,0 +1,32 @@
+{
+    "name": "cs546-b-project",
+    "version": "1.0.0",
+    "description": "First commit to master  second commit to master",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SunilSwarna/CS546-B-Project.git"
+    },
+    "author": "Kunj Desai 10444511",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/SunilSwarna/CS546-B-Project/issues"
+    },
+    "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.4",
+        "email-validator": "^2.0.4",
+        "express": "^4.17.1",
+        "express-handlebars": "^3.1.0",
+        "express-session": "^1.17.0",
+        "geolib": "^3.1.0",
+        "handlebars": "^4.5.3",
+        "mongodb": "^3.3.3",
+        "password-hash": "^1.2.2"
+    }
+}
