@@ -4,6 +4,7 @@ const friendsData = require("./friends");
 var validator = require("email-validator");
 var bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
+var ObjectId = require('mongodb').ObjectId;
 
 
 function emailIsValid(email) {
@@ -55,26 +56,28 @@ const checkUser = async function checkUser(email, password) {
 
     const allUserData = await this.getAll();
     let checkValidUser = false;
+    let userInfo = undefined
     for (var i = 0; i < allUserData.length; i++) {
         if (allUserData[i].email === email) {
             var checkPassword = await bcrypt.compareSync(password, allUserData[i].password);
             if (checkPassword) {
                 checkValidUser = true;
+                userInfo = allUserData[i]
             }
         }
     }
-    return checkValidUser;
+    return {checkValidUser, userInfo};
 }
 
 
 const getUserByID = async function getUserByID(id) {
-    if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid string id to search for";
+    if (!id || typeof id != 'string') throw "You must provide a valid string id to search for";
+
     var o_id = new ObjectId(id);
     const usersCollection = await usersData();
 
-    const userInfo = await usersCollection.findOne({ _id: o_id }).toArray();
-    if (userInfo.length == 0) throw "No user with that id";
-
+    const userInfo = await usersCollection.findOne({ _id: o_id });
+    if (userInfo == null) throw "No user with that id";
     return userInfo;
 }
 

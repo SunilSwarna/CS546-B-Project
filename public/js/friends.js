@@ -28,13 +28,24 @@ submit.addEventListener("click", (event) => {
             console.log(responseMessage)
             var list_friends = document.getElementById("listfriends");
             $('#listfriends').empty()
-            for(let i=0; i<responseMessage.arr.length; i++)
+            for(let i=0; i<responseMessage.temp_name_results.length; i++)
             {
-                list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
-                `<span>${responseMessage.arr[i].name}</span>`+
-                    `<button style="margin-left:15px" class="btn btn-primary " onClick="add_friend(this, ${responseMessage.arr[i].id})">` +
+                var person = responseMessage.temp_name_results[i]
+                if(person.status && person.status ==2){
+                    list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
+                `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
+                    "<button style='margin-left:15px' class='btn btn-primary btn-sm' disabled>"+
+                    'Pending Request</button>' +
+                    '</li>';
+                }
+                else{
+                    list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
+                `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
+                    "<button style='margin-left:15px' class='btn btn-primary btn-sm' onClick='add_friend(this,\""+String(person.friendID)+"\" )'>"+
                     'Add Friend</button>' +
                     '</li>';
+                }
+                
             }
             
         });
@@ -47,8 +58,7 @@ submit.addEventListener("click", (event) => {
 
 
 function add_friend(e, id) {
-    console.log(id)
-    // ;
+    console.log(id);
     
         var requestConfig = {
             method: "POST",
@@ -65,12 +75,13 @@ function add_friend(e, id) {
 
 
 function accept_friend(e, id) {
+    // friend user id is passed
     console.log(id)
     // ;
     
         // var requestConfig = {
         //     method: "POST",
-        //     url: "/friends/add/"+ id,
+        //     url: "/friends/accept/"+ id,
         // };
     
         // $.ajax(requestConfig).then(function (responseMessage) {
