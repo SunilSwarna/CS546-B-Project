@@ -4,8 +4,8 @@ const commentsData = mongoCollections.comments;
 const geolib = require('geolib');
 var ObjectId = require('mongodb').ObjectId;
 
-const createNotes = async function createNotes(userID, title, content, location, latitude, longitude) {
-    var locationName;
+const createNotes = async function createNotes(userID, title, content, location, latitude, longitude ,tags) {
+
     if (!userID) throw "No user provided.";
     if (!title) throw "No title provided.";
     if (!content) throw "No content provided.";
@@ -19,15 +19,15 @@ const createNotes = async function createNotes(userID, title, content, location,
 
 
     const notesCollection = await notesData();
-    const dateTime = new Date().toLocaleString('en-US');
+    const dateTime = new Date().toDateString('en-US');
     const noteInfo = {
         userID: userID,
         title: title,
         content: content,
-        locationName: locationName,
         longitude: longitude,
         latitude: latitude,
         note_createdAt: dateTime,
+        tags: tags,
         comments: []
     }
 
