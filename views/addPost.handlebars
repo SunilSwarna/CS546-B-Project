@@ -1,13 +1,25 @@
+<div id="page-container">
+    <nav>
+        <header>
+            <a href="/" class="id">Home</a>
+            <a href="/friends" class="id"> Friends</a>
+            <a href="/addPost" class="id">Add Post</a>
+            <a href="/logout" class="id">logout</a>
+        </header>
+    </nav>
+</div>
+
 <div class="bs-example">
     <h1 class="border-bottom pb-3 mb-4">add note here</h1>
-    <form class="needs-validation" action="#" method="post" >
+    <form class="needs-validation" action="/addPost" method="post">
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="note_title">Note Title:</label>
             <div class="col-lg-4">
-                <input type="text" name="note_title" class="form-control" id="note_title" placeholder="Note Title" required>
+                <input type="text" name="note_title" class="form-control" id="note_title" placeholder="Note Title"
+                    required>
             </div>
             <div class="col-sm-3">
-                <small id="validateNotetiltle" class="text-danger">     
+                <small id="validateNotetiltle" class="text-danger">
                 </small>
             </div>
         </div>
@@ -15,47 +27,113 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="NoteContent">Note Content:</label>
             <div class="col-lg-4">
-                <input type="text" name="NoteContent" class="form-control" id="NoteContent" placeholder="NoteContent" required>
+                <input type="text" name="NoteContent" class="form-control" id="NoteContent" placeholder="NoteContent"
+                    required>
             </div>
             <div class="col-sm-3">
-                <small id="validateNoteContent" class="text-danger">     
+                <small id="validateNoteContent" class="text-danger">
                 </small>
             </div>
         </div>
-       
-         <div class="form-group row">
+
+        <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="Radius">Radius:</label>
             <div class="col-lg-2">
-                <input type="number" min="0" name="radius" class="form-control" id="radius" placeholder="radius" required>
+                <input type="number" min="0" name="radius" class="form-control" id="radius" placeholder="radius"
+                    required>
             </div>
             <div class="col-sm-3">
-                <small id="validateradius" class="text-danger">     
+                <small id="validateradius" class="text-danger">
                 </small>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="Tags">Tags:</label>
-                
-                <select class="selectpicker"name="tags" data-live-search="true"  data-size="5" multiple>
-                {{#each tags}}   
+
+            <select class="selectpicker" name="tags" data-live-search="true" data-size="5" multiple>
+                {{#each tags}}
                 <option value={{this.tag}}>{{this.tag}}</option>
-                {{/each}}   
-                </select>
-    
-                 </div>
-            <div class="col-sm-3">
-                <small id="validateradius" class="text-danger">     
-                </small>
-            </div>
+                {{/each}}
+            </select>
+
+        </div>
+        <div class="col-sm-3">
+            <small id="validateradius" class="text-danger">
+            </small>
         </div>
         <div class="form-group row">
             <div class="col-lg-4 offset-sm-3">
-                <input id="latitude" type="hidden" name="latitude"  >
-                <input id="longitude" type="hidden" name="longitude"  >
+                <input id="latitude" type="hidden" name="latitude">
+                <input id="longitude" type="hidden" name="longitude">
                 <input id="notepost" type="submit" class="btn btn-primary" value="Submit">
 
-                <input type="reset" class="btn btn-secondary" value="NReset">
+                <input type="reset" class="btn btn-secondary" value="Reset">
             </div>
         </div>
     </form>
-    <script src="js/home.js"></script>
+</div>
+<div class="anyClass">
+    {{#if notes.length}}
+    {{#each notes}}
+    <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;">
+        <div class="card-header" style="background-color: #337ab7;">
+            <div class="row">
+                <div class="offset-1" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.title}}</div>
+                <div class="ml-auto p-2" style="color: #fff;font-size: 18px;">On {{this.note_createdAt}}</div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{this.content}}</p>
+            {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="p-2">
+
+                    {{#each this.tags}}
+                    <span>#{{this}}</span>
+
+                    {{/each}}
+                </div>
+                <div class="ml-auto p-2">
+                    <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+                        {{!-- <span class="glyphicon glyphicon-comment"> Leave a Comment</span> --}}
+                        Leave a Comment
+                    </button>
+                    {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+                        
+                        Hide Comment
+                    </button> --}}
+                    <button style="font-size:11px;" type="button" class="btn btn-danger">Delete</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="background-color: white;">
+            <div id="comments-add">
+                {{#each this.comments}}
+                <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 5px;border-radius: 11px;">
+                    <div class="p-2" style="text-transform: lowercase;">{{this.name}}</div>
+                    <div class="p-2">{{this.description}}</div>
+                    <div class="ml-auto p-2">On {{this.commented_at}}</div>
+                </div>
+
+                {{/each}}
+            </div>
+            <div class="input-group">
+                <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
+                    placeholder="Add a comment" type="text">
+                <span class="input-group-addon">
+                    <a onclick="add_comment(this, {{this._id}},{{this.userID}})" data-toggle="tooltip"
+                        title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
+                </span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <p class="not-found">No Notes to show!</p>
+    {{/if}}
+</div>
+<script src="js/home.js"></script>

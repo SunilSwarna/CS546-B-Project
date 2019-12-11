@@ -38,6 +38,13 @@ submit.addEventListener("click", (event) => {
                     'Pending Request</button>' +
                     '</li>';
                 }
+                else if(person.status && person.status ==1){
+                    list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
+                `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
+                    "<button style='margin-left:15px' class='btn btn-primary btn-sm' disabled>"+
+                    'Already Friend</button>' +
+                    '</li>';
+                }
                 else{
                     list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
                 `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
@@ -76,35 +83,38 @@ function add_friend(e, id) {
 
 function accept_friend(e, id) {
     // friend user id is passed
-    console.log(id)
-    // ;
+    console.log(id);
     
-        // var requestConfig = {
-        //     method: "POST",
-        //     url: "/friends/accept/"+ id,
-        // };
+        var requestConfig = {
+            method: "POST",
+            url: "/friends/accept/"+ id,
+        };
     
-        // $.ajax(requestConfig).then(function (responseMessage) {
-        //     console.log(responseMessage)
-        //     $(e).parent().remove()
-        //     // do add msg saying friend is succesfully added
-        // });
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage)
+            $(e).parent().remove()
+            // do add msg saying friend is succesfully added
+        }).catch(function (error) {
+            console.log(error)
+        });;
         
 }
 
 function delete_friend(e, id) {
     console.log(id)
-    // ;
+    console.log(id);
     
-        // var requestConfig = {
-        //     method: "POST",
-        //     url: "/friends/add/"+ id,
-        // };
+        var requestConfig = {
+            method: "POST",
+            url: "/friends/delete/"+ id,
+        };
     
-        // $.ajax(requestConfig).then(function (responseMessage) {
-        //     console.log(responseMessage)
-        //     $(e).parent().remove()
-        //     // do add msg saying friend is succesfully added
-        // });
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage)
+            $(e).parent().remove()
+            // do add msg saying friend is succesfully added
+        }).catch(function (error) {
+            console.log(error)
+        });;
         
 }

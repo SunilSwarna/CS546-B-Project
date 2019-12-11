@@ -77,3 +77,9 @@ border: 2px solid #ccc;
       width: 100%;
       height: 2.5rem;            /* Footer height */
     }
+
+
+  .anyClass {
+      height:150px;
+      overflow-y: scroll;
+    }

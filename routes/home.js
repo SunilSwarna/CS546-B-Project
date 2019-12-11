@@ -11,8 +11,8 @@ const loginMiddleware = (req, res, next) => {
     }
 }
 router.get('/', loginMiddleware, async(req, res) => {
-    var latitute = 44.5235792;
-    var longitude = -89.574563;
+    var latitute = 40.745094;
+    var longitude = -74.024255;
     var radius = 5;
     try {
         const notesAll = await notes.findNotes(latitute, longitude, radius);
