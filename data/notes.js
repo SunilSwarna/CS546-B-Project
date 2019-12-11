@@ -4,8 +4,8 @@ const commentsData = mongoCollections.comments;
 const geolib = require('geolib');
 var ObjectId = require('mongodb').ObjectId;
 
-const createNotes = async function createNotes(userID, title, content, location, latitude, longitude) {
-    var locationName;
+const createNotes = async function createNotes(userID, title, content, location, latitude, longitude ,tags) {
+
     if (!userID) throw "No user provided.";
     if (!title) throw "No title provided.";
     if (!content) throw "No content provided.";
@@ -19,15 +19,15 @@ const createNotes = async function createNotes(userID, title, content, location,
 
 
     const notesCollection = await notesData();
-    const dateTime = new Date().toLocaleString('en-US');
+    const dateTime = new Date().toDateString('en-US');
     const noteInfo = {
         userID: userID,
         title: title,
         content: content,
-        locationName: locationName,
         longitude: longitude,
         latitude: latitude,
         note_createdAt: dateTime,
+        tags: tags,
         comments: []
     }
 
@@ -77,11 +77,10 @@ const getAllNotes = async function getAllNotes() {
 const findNotesByUserID = async function findNotesByUserID(id) {
 
     if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid post id.";
-
-    const allNotes = this.getAllNotes();
+    const allNotes = await this.getAllNotes();
     var notesByUser = [];
     for (var i = 0; i < allNotes.length; i++) {
-        if (allNotes[i].userID === id) {
+        if (allNotes[i].userID == id) {
             notesByUser.push(allNotes[i]);
         }
     }
@@ -168,11 +167,11 @@ const updateNote = async function updateNote(id, title, content, location, latit
 const addCommentToNote = async function addCommentToNote(noteID, commentID) {
     const notesCollection = await notesData();
     var o_id = new ObjectId(noteID);
-    const updateInfo = await notesCollection.updateOne({ _id: o_id }, { $addToSet: { comments: { commentID } } });
+    const updateInfo = await notesCollection.updateOne({ _id: o_id }, { $addToSet: { comments: {"commentID":String(commentID) }  } });
 
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
-    return await this.getNoteById(noteID.toString());
+    return await this.getNoteById(String(noteID));
 }
 
 const removeCommentFromNote = async function removeCommentFromNote(noteID, commentID) {
