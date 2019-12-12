@@ -4,13 +4,13 @@ const commentsData = mongoCollections.comments;
 const geolib = require('geolib');
 var ObjectId = require('mongodb').ObjectId;
 
-const createNotes = async function createNotes(userID, title, content, location, latitude, longitude ,tags) {
+const createNotes = async function createNotes(userID, title, content, radius, latitude, longitude ,tags) {
 
     if (!userID) throw "No user provided.";
     if (!title) throw "No title provided.";
     if (!content) throw "No content provided.";
-    if (!location) {
-        locationName = "Stevens Institute of Technology";
+    if (!radius) {
+        radius = 5000
     }
     if (!latitude || !longitude) {
         latitude = 44.5235792;
@@ -24,6 +24,7 @@ const createNotes = async function createNotes(userID, title, content, location,
         userID: userID,
         title: title,
         content: content,
+        radius: parseInt(radius),
         longitude: longitude,
         latitude: latitude,
         note_createdAt: dateTime,
@@ -39,11 +40,11 @@ const createNotes = async function createNotes(userID, title, content, location,
 const findNotes = async function findNote(latitude, longitude, radius) {
 
     if (!latitude || !longitude) {
-        latitude = 44.5235792;
-        longitute = -89.574563;
+        latitude = 40.745094;
+        longitute = -74.024255;
     }
     if (!radius) {
-        radius = 5;
+        radius = 5000;
     }
     const allNotes = await this.getAllNotes();
     var noteLong, noteLat;
@@ -55,7 +56,8 @@ const findNotes = async function findNote(latitude, longitude, radius) {
         currentNote = allNotes[i];
         noteLong = allNotes[i].longitude;
         noteLat = allNotes[i].latitude;
-        addNote = geolib.isPointWithinRadius({ latitude: noteLat, longitude: noteLong }, { latitude: latitude, longitude: longitude },
+        radius = allNotes[i].radius;
+        addNote = geolib.isPointWithinRadius({ latitude: parseFloat(noteLat), longitude: parseFloat(noteLong) }, { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
             radius
         );
         if (addNote) {
