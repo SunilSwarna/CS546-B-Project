@@ -32,6 +32,47 @@ router.get('/', loginMiddleware,async(req, res) => {
         res.status(404).json({ "error": e });
     }
 })
+router.get('/edit/:id', loginMiddleware,async(req, res) => {
+    try {
+        
+        var editNote = await notes.getNoteById("5dedb8ed7c10621c78749b4b");
+        let modiftag= tags;
+        for(i=0;i<tags.length;i++){
+            modiftag[i].sel=false;
+        }
+
+        for(i=0;i<editNote.tags.length;i++){
+            for(j=0;j<tags.length;j++){
+                if(editNote.tags[i]==tags[j].tag){
+                    modiftag[j].sel=true;
+                }
+            }
+        }
+        console.log(modiftag)
+        return res.status(200).render("editnote",{ title: "edit page" ,tags: modiftag, note:editNote});
+        }
+        // console.log(userNotes[0].comments)
+       
+     catch (e) {
+         console.log(e)
+        res.status(404).json({ "error": e });
+    }
+})
+
+
+router.post('/edit/:id', loginMiddleware,async(req, res) => {
+    console.log(req.body)
+    res.redirect('/addPost')
+    // try {
+    //     var editNote = await notes.getNoteById("5ded90de1b92a33f1c770200")
+    //     return res.status(200).render("editnote",{ title: "edit page" ,tags: tags, note:editNote});
+    //     }
+    //     // console.log(userNotes[0].comments)
+       
+    //  catch (e) {
+    //     res.status(404).json({ "error": e });
+    // }
+})
 router.post('/',loginMiddleware, async(req, res) => {
     try {
         console.log(req.body)
