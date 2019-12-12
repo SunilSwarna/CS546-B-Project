@@ -97,10 +97,10 @@
                     {{/each}}
                 </div>
                 <div class="ml-auto p-2">
-                    <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
-                        {{!-- <span class="glyphicon glyphicon-comment"> Leave a Comment</span> --}}
+                    {{!-- <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-comment"> Leave a Comment</span>
                         Leave a Comment
-                    </button>
+                    </button> --}}
                     {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
                         
                         Hide Comment
@@ -111,11 +111,11 @@
             </div>
         </div>
         <div class="card-footer" style="background-color: white;">
-            <div id="comments-add">
+            <div id={{@index}}>
                 {{#each this.comments}}
-                <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 5px;border-radius: 11px;">
-                    <div class="p-2" style="text-transform: lowercase;">{{this.name}}</div>
-                    <div class="p-2">{{this.description}}</div>
+                <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 0.5%;border-radius: 11px;">
+                    <div class="p-2" style="text-transform: lowercase;color: #0062cc;">{{this.name}}</div>
+                    <div class="p-2" style="font-family: sans-serif;">{{this.description}}</div>
                     <div class="ml-auto p-2">On {{this.commented_at}}</div>
                 </div>
 
@@ -125,7 +125,7 @@
                 <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
                     placeholder="Add a comment" type="text">
                 <span class="input-group-addon">
-                    <a onclick="add_comment(this, {{this._id}},{{this.userID}})" data-toggle="tooltip"
+                    <a onclick="add_comment(this, {{this._id}},{{this.userID}}, {{@index}})" data-toggle="tooltip"
                         title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
                 </span>
             </div>
@@ -136,4 +136,4 @@
     <p class="not-found">No Notes to show!</p>
     {{/if}}
 </div>
-<script src="js/home.js"></script>
+<script src="js/addPost.js"></script>

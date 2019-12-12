@@ -25,6 +25,14 @@ router.get('/', loginMiddleware, async(req, res) => {
 
 router.post('/', async(req, res) => {
     try {
+        if(!req.body.latitude && !req.body.longitude){
+            req.body.latitude = 40.745094
+            req.body.longitude = -74.024255
+        }
+        if(req.body.latitude == '' || req.body.longitude ==''){
+            req.body.latitude = 40.745094
+            req.body.longitude = -74.024255
+        }
         req.session.logged = false;
         if (!req.body) return res.status(400).render("login", { error: "Bad Request" });
         if (!req.body.inputEmail || !req.body.password) {
@@ -34,6 +42,8 @@ router.post('/', async(req, res) => {
         if (foundUser.checkValidUser) {
             req.session.logged = true;
             req.session.userInfo = foundUser.userInfo
+            req.session.latitude = req.body.latitude
+            req.session.longitude = req.body.longitude
             res.redirect("/home");
         } else {
             throw "Email or password not correct.";
