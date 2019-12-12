@@ -10,17 +10,70 @@
 </div>
 
 
-{{#if allNotes.length}}
-<ul>
-  {{#each allNotes}}
-  <li>
-    {{this.title}}
-    {{this.content}}
-  </li>
+{{#if notes.length}}
+
+  {{#each notes}}
+  <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;">
+    <div class="card-header" style="background-color: #337ab7;">
+      <div class="row">
+        <div class="offset-1" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.title}}</div>
+        <div class="ml-auto p-2" style="color: #fff;font-size: 18px;">On {{this.note_createdAt}}</div>
+
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{this.content}}</p>
+      {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="p-2">
+
+          {{#each this.tags}}
+          <span>#{{this}}</span>
+
+          {{/each}}
+        </div>
+        <div class="ml-auto p-2">
+          {{!-- <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+            <span class="glyphicon glyphicon-comment"> Leave a Comment</span>
+            Leave a Comment
+          </button> --}}
+          {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+                        
+                        Hide Comment
+                    </button> --}}
+          <button style="font-size:11px;" type="button" class="btn btn-danger">Delete</button>
+
+        </div>
+      </div>
+    </div>
+    <div class="card-footer" style="background-color: white;">
+      <div id={{@index}}>
+        {{#each this.comments}}
+        <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 0.5%;border-radius: 11px;">
+          <div class="p-2" style="text-transform: lowercase;color: #0062cc;">{{this.name}}</div>
+          <div class="p-2" style="font-family: sans-serif;">{{this.description}}</div>
+          <div class="ml-auto p-2">On {{this.commented_at}}</div>
+        </div>
+
+        {{/each}}
+      </div>
+      <div class="input-group">
+        <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
+          placeholder="Add a comment" type="text">
+        <span class="input-group-addon">
+          <a onclick="add_comment(this, {{this._id}},{{this.userID}}, {{@index}})" data-toggle="tooltip"
+            title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
+        </span>
+      </div>
+    </div>
+  </div>
   {{/each}}
-</ul>
+
 
 {{else}}
-<p class="not-found">We're sorry, but no results were found for {{name}}.</p>
+<p class="not-found">We're sorry, but no Notes were found for {{name}}.</p>
 {{/if}}
 
+<script src="js/home.js"></script>

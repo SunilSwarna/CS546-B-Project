@@ -103,7 +103,7 @@ router.post('/comment',loginMiddleware, async(req, res) => {
             return res.json({ error: true, errormsg:  "One of the fileds is missing!" })
         }
         
-        var comment_posted = await comments.createComment(req.body.note_id, req.body.user_id, req.body.comment)
+        var comment_posted = await comments.createComment(req.body.note_id, req.session.userInfo._id, req.body.comment)
         var {firstName, lastName} = await users.getUserByID(comment_posted.userid)
         comment_posted.name = firstName+" "+lastName
         console.log(comment_posted)
