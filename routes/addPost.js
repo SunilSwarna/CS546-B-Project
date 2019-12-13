@@ -10,6 +10,7 @@ const loginMiddleware = (req, res, next) => {
     if (!req.session.logged) {
         res.status(403).render("login", { title: "Login Page", error: "Access denied." });
     } else {
+        res.locals.testName =  req.session.userInfo.firstName+" "+ req.session.userInfo.lastName
         next();
     }
 }
@@ -48,6 +49,9 @@ router.post('/',loginMiddleware, async(req, res) => {
         if (!req.body.note_title || !req.body.NoteContent || !req.body.radius) {
             return res.status(400).render("addPost", { title: "AddPost page", error: "One of the fileds is missing" })
         }
+        if(!req.body.tags){
+            req.body.tags = []
+        }
         
         await notes.createNotes(req.session.userInfo._id,req.body.note_title,req.body.NoteContent,req.body.radius,req.body.latitude,req.body.longitude, req.body.tags)
        // res.cookie("userData", { "message": req.body.firstName + " is Successfully Signed up!" });
@@ -69,7 +73,6 @@ router.post('/comment',loginMiddleware, async(req, res) => {
         var comment_posted = await comments.createComment(req.body.note_id, req.session.userInfo._id, req.body.comment)
         var {firstName, lastName} = await users.getUserByID(comment_posted.userid)
         comment_posted.name = firstName+" "+lastName
-        console.log(comment_posted)
         return res.json({ error: false, "data": comment_posted });
     } catch (e) {
         return res.json({ error: true, errormsg: e });
@@ -77,5 +80,17 @@ router.post('/comment',loginMiddleware, async(req, res) => {
     // res.redirect('/signup')
 })
 
+router.delete("/deletnote/:noteid", loginMiddleware,async (req, res) => {
+    if(!req.params.noteid) throw "Noteid not provided"
+
+    var note_id = req.params.noteid; // friend object id
+    try{
+        var deleted_note = await notes.deleteNote(note_id)
+        return res.json({deleted: true, "data":deleted_note})
+    }
+    catch(e){
+        return res.json({deleted: false, "data":[], error:e})
+    }
+});
 
 module.exports = router

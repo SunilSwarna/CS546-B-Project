@@ -27,6 +27,7 @@
         "geolib": "^3.1.0",
         "handlebars": "^4.5.3",
         "mongodb": "^3.3.3",
-        "password-hash": "^1.2.2"
+        "password-hash": "^1.2.2",
+        "xss": "^1.0.6"
     }
 }

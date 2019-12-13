@@ -44,6 +44,7 @@ router.post('/', async(req, res) => {
             req.session.userInfo = foundUser.userInfo
             req.session.latitude = req.body.latitude
             req.session.longitude = req.body.longitude
+            res.locals.name = foundUser.userInfo.firstName+" "+foundUser.userInfo.lastName
             res.redirect("/home");
         } else {
             throw "Email or password not correct.";
