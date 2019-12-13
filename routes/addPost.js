@@ -13,12 +13,15 @@ const loginMiddleware = (req, res, next) => {
         next();
     }
 }
+
 router.get('/', loginMiddleware,async(req, res) => {
     try {
         var userNotes = await notes.findNotesByUserID(req.session.userInfo._id)
+        var name = req.session.userInfo.firstName+" "+req.session.userInfo.lastName
         for(let i=0;i<userNotes.length;i++){
             userNotes[i].userID = '"' + userNotes[i].userID +'"'
             userNotes[i]._id = '"' + String(userNotes[i]._id) + '"'
+            userNotes[i].name = name
             for(let j=0; j<userNotes[i].comments.length ;j++){
                 var {userInfo, commentOne} = await comments.getUserNamebyComment(userNotes[i].comments[j].commentID)
                 userNotes[i].comments[j].name = userInfo.firstName+ " "+userInfo.lastName 
@@ -32,9 +35,10 @@ router.get('/', loginMiddleware,async(req, res) => {
         res.status(404).json({ "error": e });
     }
 })
+
 router.post('/',loginMiddleware, async(req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         if(!req.body.latitude && !req.body.longitude){
             req.body.latitude = 40.745094
             req.body.longitude = -74.024255

@@ -4,6 +4,8 @@ const data = require("../data");
 const notes = data.notes;
 const comments = data.comments
 const tags=data.tags;
+const users = data.users;
+
 const loginMiddleware = (req, res, next) => {
     if (!req.session.logged) {
         res.status(403).render("login", { title: "Login Page", error: "Access denied." });
@@ -14,13 +16,16 @@ const loginMiddleware = (req, res, next) => {
 router.get('/', loginMiddleware, async(req, res) => {
     var latitute = req.session.latitude;
     var longitude = req.session.longitude;
-    console.log(latitute, longitude)
+
     var radius = 5;
     try {
         var userNotes = await notes.findNotes(latitute, longitude, radius);
         for(let i=0;i<userNotes.length;i++){
+            const {firstName, lastName} = await users.getUserByID(userNotes[i].userID)
+            userNotes[i].name = firstName+" "+lastName
             userNotes[i].userID = '"' + userNotes[i].userID +'"'
             userNotes[i]._id = '"' + String(userNotes[i]._id) + '"'
+            
             for(let j=0; j<userNotes[i].comments.length ;j++){
                 var {userInfo, commentOne} = await comments.getUserNamebyComment(userNotes[i].comments[j].commentID)
                 userNotes[i].comments[j].name = userInfo.firstName+ " "+userInfo.lastName 
@@ -28,7 +33,7 @@ router.get('/', loginMiddleware, async(req, res) => {
                 userNotes[i].comments[j].description = commentOne.description
             }
         }
-        console.log(req.session.latitude, req.session.longitude)
+        
         res.render("home", { title: "Pied Piper", "notes": userNotes});
     } catch (e) {
         res.status(404).json({ "error": e });
