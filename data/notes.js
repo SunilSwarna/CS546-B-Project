@@ -129,8 +129,10 @@ const getNoteById = async function getNoteById(id) {
 
     return noteOne;
 }
-const updateNote = async function updateNote(id, title, content, location, latitude, longitude) {
-    const note = this.getNoteById(id);
+const updateNote = async function updateNote(id, title, content, radius,tags) {
+
+   console.log(String(id))
+    const note = await this.getNoteById(String(id));
     const notesCollection = await notesData();
     if (!title) {
         title = note.title;
@@ -138,24 +140,25 @@ const updateNote = async function updateNote(id, title, content, location, latit
     if (!content) {
         content = note.content;
     }
-    if (!location) {
-        location = note.location;
-    }
-    if (!latitude || !longitude) {
-        latitude = note.latitude;
-        longitude = note.longitude;
+   
+  
+    if (!radius) {
+        radius = note.radius;
     }
 
     let updateInfo = {
         userID: note.userID,
         title: title,
         content: content,
-        location: location,
-        latitude: latitude,
-        longitude: longitude
+        radius: parseInt(radius),
+        longitude: note.longitude,
+        latitude: note.latitude,
+        note_createdAt: note.note_createdAt,
+        tags: tags,
+        comments: note.comments
     }
 
-    const updatedInfo = await notesCollection.replaceOne({ _id: o_id },
+    const updatedInfo = await notesCollection.replaceOne({ _id: note._id },
         updateInfo
     );
     if (updatedInfo.modifiedCount === 0) {

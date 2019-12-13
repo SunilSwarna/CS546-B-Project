@@ -35,7 +35,7 @@ router.get('/', loginMiddleware,async(req, res) => {
 router.get('/edit/:id', loginMiddleware,async(req, res) => {
     try {
         
-        var editNote = await notes.getNoteById("5dedb8ed7c10621c78749b4b");
+        var editNote = await notes.getNoteById("5df2c0b23904483dbcf70c2e");
         let modiftag= tags;
         for(i=0;i<tags.length;i++){
             modiftag[i].sel=false;
@@ -62,16 +62,24 @@ router.get('/edit/:id', loginMiddleware,async(req, res) => {
 
 router.post('/edit/:id', loginMiddleware,async(req, res) => {
     console.log(req.body)
-    res.redirect('/addPost')
-    // try {
-    //     var editNote = await notes.getNoteById("5ded90de1b92a33f1c770200")
-    //     return res.status(200).render("editnote",{ title: "edit page" ,tags: tags, note:editNote});
-    //     }
-    //     // console.log(userNotes[0].comments)
-       
-    //  catch (e) {
-    //     res.status(404).json({ "error": e });
-    // }
+
+    try {
+        console.log(req.body)
+        
+        if (!req.body) return res.status(400).render("addPost", { title: "AddPost Page", error: "Bad Request" });
+        // if 404 status the js files are not loaded properly & html will be mpty always
+        // if (!req.body.note_title || !req.body.NoteContent || !req.body.radius) {
+        //     return res.status(400).render("addPost", { title: "AddPost page", error: "One of the fileds is missing" })
+        // }
+        console.log(req.params.id)
+        await notes.updateNote(req.params.id,req.body.note_title,req.body.NoteContent,req.body.radius,req.body.tags)
+    //    // res.cookie("userData", { "message": req.body.firstName + " is Successfully Signed up!" });
+        return res.redirect("/addPost");
+    } catch (e) {
+        console.log(e)
+        console.log("Hey I am entering")
+        return res.status(404).render("addPost", { title: "AddPost page", error: e })
+    }
 })
 router.post('/',loginMiddleware, async(req, res) => {
     try {
