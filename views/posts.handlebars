@@ -25,69 +25,6 @@
 
 </div>
 
-<div class="bs-example">
-    <h1 class="border-bottom pb-3 mb-4">add note here</h1>
-    <form class="needs-validation" action="/addPost" method="post">
-        <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="note_title">Note Title:</label>
-            <div class="col-lg-4">
-                <input type="text" name="note_title" class="form-control" id="note_title" placeholder="Note Title"
-                    required>
-            </div>
-            <div class="col-sm-3">
-                <small id="validateNotetiltle" class="text-danger">
-                </small>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="NoteContent">Note Content:</label>
-            <div class="col-lg-4">
-                <input type="text" name="NoteContent" class="form-control" id="NoteContent" placeholder="NoteContent"
-                    required>
-            </div>
-            <div class="col-sm-3">
-                <small id="validateNoteContent" class="text-danger">
-                </small>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="Radius">Radius:</label>
-            <div class="col-lg-2">
-                <input type="number" min="0" name="radius" class="form-control" id="radius" placeholder="radius"
-                    required>
-            </div>
-            <div class="col-sm-3">
-                <small id="validateradius" class="text-danger">
-                </small>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="Tags">Tags:</label>
-
-            <select class="selectpicker" name="tags" data-live-search="true" data-size="5" multiple>
-                {{#each tags}}
-                <option value={{this.tag}}>{{this.tag}}</option>
-                {{/each}}
-            </select>
-
-        </div>
-        <div class="col-sm-3">
-            <small id="validateradius" class="text-danger">
-            </small>
-        </div>
-        <div class="form-group row">
-            <div class="col-lg-4 offset-sm-3">
-                <input id="latitude" type="hidden" name="latitude">
-                <input id="longitude" type="hidden" name="longitude">
-                <input id="notepost" type="submit" class="btn btn-primary" value="Submit">
-
-                <input type="reset" class="btn btn-secondary" value="Reset">
-            </div>
-        </div>
-    </form>
-</div>
 <div class="anyClass">
     {{#if notes.length}}
     {{#each notes}}
@@ -153,4 +90,4 @@
     <p class="not-found">No Notes to show!</p>
     {{/if}}
 </div>
-<script src="js/addPost.js"></script>
+<script src="/js/otherposts.js"></script>

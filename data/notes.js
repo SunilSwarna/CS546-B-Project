@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const notesData = mongoCollections.notes;
 const commentsData = mongoCollections.comments;
+const usersData = mongoCollections.users;
 const geolib = require('geolib');
 var ObjectId = require('mongodb').ObjectId;
 
@@ -79,6 +80,12 @@ const getAllNotes = async function getAllNotes() {
 const findNotesByUserID = async function findNotesByUserID(id) {
 
     if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid post id.";
+    var user_id = new ObjectId(id);
+    const usersCollection = await usersData();
+
+    const userInfo = await usersCollection.findOne({ _id: user_id });
+    if (userInfo == null) throw "No user with that id";
+    
     const allNotes = await this.getAllNotes();
     var notesByUser = [];
     for (var i = 0; i < allNotes.length; i++) {
@@ -109,7 +116,9 @@ const getNoteById = async function getNoteById(id) {
     const commentsCollection = await commentsData();
     var o_id = new ObjectId(id);
     const noteOne = await notesCollection.findOne({ _id: o_id });
-
+    if(noteOne == null || noteOne ==undefined){
+        throw "No Note with that id"
+    }
 
     var comment_o_id = [],
         commentObjArr = [];
