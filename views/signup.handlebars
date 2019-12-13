@@ -72,5 +72,14 @@
         </p>
     </div>
 </div>
-<div class = "error">{{error}}</div>
+
+<div id="dbError">
+    {{#if error}}
+    <ul class="list-group col-md-4 offset-1">
+        <li class="list-group-item list-group-item-primary" style="margin-left:35%;background-color: #0062cc78">
+            {{error}}
+        </li>
+    </ul>
+    {{/if}}
+</div>
 <script src="js/signup.js"></script>

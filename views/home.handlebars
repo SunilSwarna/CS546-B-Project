@@ -1,79 +1,125 @@
 <div id="page-container">
-  <nav>
-    <header>
-      <a href="/" class="id">Home</a>
-      <a href="/friends" class="id"> Friends</a>
-      <a href="/addPost" class="id">Add Post</a>
-      <a href="/logout" class="id">logout</a>
-    </header>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+    <span class="navbar-brand">Pied Piper</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/addPost">Add-Post</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/friends">Friend-Requests</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/friends/posts">Friends-Posts</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" style="margin-top: 1%;">
+      <li class="nav-item">
+        <span class="navbar-brand ml-auto p-2">{{testName}}</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ml-auto p-2" href="/logout">Logout</a>
+      </li>
+    </ul>
+
   </nav>
+
 </div>
+<div class="ml-5">
+  <button id="showFilter" class="btn btn-success"><span class="glyphicon glyphicon-filter"></span>Filter</button>
+  <div style="margin-bottom: 15%;margin-top: 1%;" id="hideFilter">
+    <form class="row needs-validation" action="/home" method="post">
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="onlyFriends" name="onlyFriends">
+        <label class="custom-control-label" for="onlyFriends">Friends</label>
+      </div>
+      <div class="" style="margin-left: 3%;">
+        <span class="custom-control" for="tags" style="font-weight: bold;">By Tags</span>
+        <select class="selectpicker" name="tags" id="tags" data-live-search="true" data-size="5" multiple>
+          {{#each tags}}
+          <option value={{this.tag}}>{{this.tag}}</option>
+          {{/each}}
+        </select>
+      </div>
 
-
+      <div class="" style="margin-left: 3%;">
+        <button id="closeFilter" class="btn btn-secondary"><span
+            class="glyphicon glyphicon-refresh"></span>Filter</button>
+      </div>
+    </form>
+  </div>
+</div>
 {{#if notes.length}}
 
-  {{#each notes}}
-  <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;">
-    <div class="card-header" style="background-color: #337ab7;">
-      <div class="row">
-        <div class="offset-1" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.title}}</div>
-        <div class="ml-auto p-2" style="color: #fff;font-size: 18px;">On {{this.note_createdAt}}</div>
+{{#each notes}}
+<div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;">
+  <div class="card-header" style="background-color: #337ab7;">
+    <div class="d-flex justify-content-between">
+      <div class="" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.name}}</div>
+      <div class="" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.title}}</div>
+      <div class="" style="color: #fff;font-size: 18px;">On {{this.note_createdAt}}</div>
 
-      </div>
     </div>
-    <div class="card-body">
-      <p class="card-text">{{this.content}}</p>
-      {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="p-2">
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{this.content}}</p>
+    {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="p-2">
 
-          {{#each this.tags}}
-          <span>#{{this}}</span>
-
-          {{/each}}
-        </div>
-        <div class="ml-auto p-2">
-          {{!-- <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
-            <span class="glyphicon glyphicon-comment"> Leave a Comment</span>
-            Leave a Comment
-          </button> --}}
-          {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
-                        
-                        Hide Comment
-                    </button> --}}
-          <button style="font-size:11px;" type="button" class="btn btn-danger">Delete</button>
-
-        </div>
-      </div>
-    </div>
-    <div class="card-footer" style="background-color: white;">
-      <div id={{@index}}>
-        {{#each this.comments}}
-        <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 0.5%;border-radius: 11px;">
-          <div class="p-2" style="text-transform: lowercase;color: #0062cc;">{{this.name}}</div>
-          <div class="p-2" style="font-family: sans-serif;">{{this.description}}</div>
-          <div class="ml-auto p-2">On {{this.commented_at}}</div>
-        </div>
+        {{#each this.tags}}
+        <span>#{{this}}</span>
 
         {{/each}}
       </div>
-      <div class="input-group">
-        <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
-          placeholder="Add a comment" type="text">
-        <span class="input-group-addon">
-          <a onclick="add_comment(this, {{this._id}},{{this.userID}}, {{@index}})" data-toggle="tooltip"
-            title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
-        </span>
+      <div class="ml-auto p-2">
+        {{!-- <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+            <span class="glyphicon glyphicon-comment"> Leave a Comment</span>
+            Leave a Comment
+          </button> --}}
+        {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
+                        
+                        Hide Comment
+                    </button> --}}
+        {{!-- <button style="font-size:11px;" type="button" class="btn btn-danger">Delete</button> --}}
+
       </div>
     </div>
   </div>
-  {{/each}}
+  <div class="card-footer" style="background-color: white;">
+    <div id={{@index}}>
+      {{#each this.comments}}
+      <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 0.5%;border-radius: 11px;">
+        <div class="p-2" style="text-transform: lowercase;color: #0062cc;">{{this.name}}</div>
+        <div class="p-2" style="font-family: sans-serif;">{{this.description}}</div>
+        <div class="ml-auto p-2">On {{this.commented_at}}</div>
+      </div>
+
+      {{/each}}
+    </div>
+    <div class="input-group">
+      <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
+        placeholder="Add a comment" type="text">
+      <span class="input-group-addon">
+        <a onclick="add_comment(this, {{this._id}},{{this.userID}}, {{@index}})" data-toggle="tooltip"
+          title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
+      </span>
+    </div>
+  </div>
+</div>
+{{/each}}
 
 
 {{else}}
-<p class="not-found">We're sorry, but no Notes were found for {{name}}.</p>
+<ul class="list-group col-md-4 offset-3">
+  <li class="list-group-item list-group-item-primary" style="margin-left:35%;background-color: #0062cc78">
+    No Notes around this location!
+  </li>
+</ul>
 {{/if}}
 
 <script src="js/home.js"></script>
