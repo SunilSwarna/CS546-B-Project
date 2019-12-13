@@ -53,7 +53,7 @@ const getAll = async function getAll() {
 const checkUser = async function checkUser(email, password) {
     if (!email || !emailIsValid(email)) throw 'Invalid email';
     if (!password || password < 5) throw 'Password not provided correctly';
-
+    var email = email. toLowerCase()
     const allUserData = await this.getAll();
     let checkValidUser = false;
     let userInfo = undefined

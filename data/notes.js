@@ -103,6 +103,15 @@ const deleteNote = async function deleteNote(id) {
     if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid string id to remove for";
     const notesCollection = await notesData();
     var o_id = new ObjectId(id);
+    const noteOne = await notesCollection.findOne({ _id: o_id });
+    if(noteOne == null || noteOne ==undefined){
+        throw "No Note with that id"
+    }
+    const commentsCollection = await commentsData();
+    for(let i=0;i<noteOne.comments.length;i++){
+        var c_id = new ObjectId(noteOne.comments[i].commentID);
+        await commentsCollection.findOneAndDelete({ _id: c_id });
+    }
     const deleteInfo = await notesCollection.findOneAndDelete({ _id: o_id });
     if (deleteInfo.value === null) {
         throw `Could not delete with id of ${id}`;

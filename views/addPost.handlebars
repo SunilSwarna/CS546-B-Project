@@ -1,27 +1,30 @@
 <div id="page-container">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+    <span class="navbar-brand">Pied Piper</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/addPost">Add-Post</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/friends">Friend-Requests</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/friends/posts">Friends-Posts</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" style="margin-top: 1%;">
+      <li class="nav-item">
+        <span class="navbar-brand ml-auto p-2">{{testName}}</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ml-auto p-2" href="/logout">Logout</a>
+      </li>
+    </ul>
 
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/addPost">Add Post</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/friends">Friend Requests</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/friends/posts">Friends Posts</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="navbar-nav">
-                <a class="nav-link ml-auto p-2" href="/logout">logout</a>
-            </li>
-        </ul>
-
-    </nav>
+  </nav>
 
 </div>
 
@@ -88,10 +91,13 @@
         </div>
     </form>
 </div>
+<div id="ajaxError" class="row" style="margin-left: 30%;">
+
+</div>
 <div class="anyClass">
     {{#if notes.length}}
     {{#each notes}}
-    <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;">
+    <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;" id="{{this._id}}@{{@index}}">
         <div class="card-header" style="background-color: #337ab7;">
             <div class="d-flex justify-content-between">
                 <div class="" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.name}}</div>
@@ -114,15 +120,9 @@
                     {{/each}}
                 </div>
                 <div class="ml-auto p-2">
-                    {{!-- <button id="showComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-comment"> Leave a Comment</span>
-                        Leave a Comment
-                    </button> --}}
-                    {{!-- <button id="hideComment" style="font-size:11px;" type="button" onClick="" class="btn btn-primary">
-                        
-                        Hide Comment
-                    </button> --}}
-                    <button style="font-size:11px;" type="button" class="btn btn-danger">Delete</button>
+
+                    <button onclick="delete_note(this, {{this._id}},{{@index}})" style="font-size:11px;" type="button"
+                        class="btn btn-danger">Delete</button>
 
                 </div>
             </div>
@@ -150,7 +150,11 @@
     </div>
     {{/each}}
     {{else}}
-    <p class="not-found">No Notes to show!</p>
+    <ul class="list-group col-md-2 offset-3">
+        <li class="list-group-item list-group-item-primary" style="margin-left:35%;background-color: #0062cc78">
+            No Notes to show!
+        </li>
+    </ul>
     {{/if}}
 </div>
 <script src="js/addPost.js"></script>

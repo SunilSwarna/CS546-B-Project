@@ -24,3 +24,26 @@ function add_comment(e, note_id, user_id, index) {
         console.log(error.responseJSON)
     });;
 }
+
+$('#hideFilter').hide()
+
+$( "#showFilter" ).click(function() {
+    if(!$('#hideFilter').is(":visible")){
+        $('#hideFilter').show()
+    } 
+    else{
+        $('#hideFilter').hide()
+    }
+    
+  });
+
+$('#closeFilter').click(function(event) {
+    
+    var e =document.getElementById("tags")
+    var result = e.options[e.selectedIndex];
+    if(document.getElementById("onlyFriends").checked==false && result==undefined){
+        event.preventDefault();
+    }
+    
+    
+  });
