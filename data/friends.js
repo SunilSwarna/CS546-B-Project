@@ -149,7 +149,7 @@ const removeFriend = async function removeFriend(id, userID, friendID) {
 
     const friendsCollection = await friendsData();
     var o_id = new ObjectId(id);
-    const updateInfo = await friendsCollection.updateOne({ _id: o_id }, { $pull: { friends: { friendID: friendID.toString(), status: 1 } } });
+    const updateInfo = await friendsCollection.updateOne({ _id: o_id }, { $pull: { friends: { friendID: friendID.toString(), status: 0 } } });
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
     const usersCollection = await usersData();
@@ -158,7 +158,7 @@ const removeFriend = async function removeFriend(id, userID, friendID) {
 
     const friendInfo = await usersCollection.findOne({ _id: o_f_id });
     var o_ff_id = new ObjectId(friendInfo.friendID);
-    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id }, { $pull: { friends: { friendID: userID.toString(), status: 1 } } });
+    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id }, { $pull: { friends: { friendID: userID.toString(), status: 2 } } });
     if (!updateInfo1.matchedCount && !updateInfo1.modifiedCount) throw 'Update failed';
 
     return true;
