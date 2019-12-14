@@ -6,13 +6,13 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/addPost">Add-Post</a>
+        <a style="color: #a0a3a5;" class="nav-link" href="/addPost">Add-Note</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/friends">Friend-Requests</a>
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends">Friend-Requests</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/friends/posts">Friends-Posts</a>
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends/posts">Friends-Posts</a>
       </li>
     </ul>
     <ul class="navbar-nav" style="margin-top: 1%;">
@@ -20,7 +20,7 @@
         <span class="navbar-brand ml-auto p-2">{{testName}}</span>
       </li>
       <li class="nav-item">
-        <a class="nav-link ml-auto p-2" href="/logout">Logout</a>
+        <a style="color: #a0a3a5;" class="nav-link ml-auto p-2" href="/logout">Logout</a>
       </li>
     </ul>
 
@@ -31,19 +31,19 @@
 <div class="bs-example">
 <form class="needs-validation" action="{{note._id}}" method="post">
   <div class="form-group row">
-    <label for="col-lg-2 col-form-label1">note title</label>
+    <label class="col-lg-2 col-form-label" for="note_title">Note Title</label>
     <div class="col-lg-4">
     <input type="text" class="form-control" id="note_title" name="note_title" value="{{note.title}}" placeholder="note title" required>
   </div>
    </div>
   <div class="form-group row">
-    <label for="col-lg-2 col-form-label">note content</label>
+    <label class="col-lg-2 col-form-label" for="note_content">Note Content:</label>
     <div class="col-lg-4">
     <input type="text" class="form-control" id="note_content" name="note_content" value="{{note.content}}" placeholder="note content" required>
     </div>
   </div>
      <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="Radius">Radius:</label>
+            <label class="col-lg-2 col-form-label" for="radius">Radius:</label>
             <div class="col-lg-2">
                 <input type="number" min="0" class="form-control" name="radius" value="{{note.radius}}" id="radius" placeholder="radius"
                     required>
@@ -68,7 +68,7 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-lg-4 offset-sm-3">
+            <div class="col-lg-4 offset-sm-5">
                 
                 <input id="notepost" type="submit" class="btn btn-primary" value="Submit">
 

@@ -5,7 +5,6 @@ $("#validatelastName").hide();
 $("#validateEmail").hide();
 var submit = document.getElementById("login");
 
-
 submit.addEventListener("click", (event) => {
     if(  $('#dbError').is(':visible') )   $('#dbError').hide()
     $("#passwordHelp").hide();
