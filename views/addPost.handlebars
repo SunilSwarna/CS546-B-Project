@@ -120,7 +120,7 @@
                     {{/each}}
                 </div>
                 <div class="ml-auto p-2">
-                    <a href="addPost/edit/{{editid}}" class="btn btn-info" role="button" class="btn btn-primary">Edit</a>
+                    <a href="/addPost/edit/{{editid}}" class="btn btn-info" role="button" class="btn btn-primary">Edit</a>
                     <button onclick="delete_note(this, {{this._id}},{{@index}})" style="font-size:11px;" type="button"
                         class="btn btn-danger">Delete</button>
 
@@ -158,4 +158,4 @@
     </ul>
     {{/if}}
 </div>
-<script src="js/addPost.js"></script>
+<script src="/js/addPost.js"></script>
