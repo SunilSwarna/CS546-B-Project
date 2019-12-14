@@ -6,7 +6,7 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/addPost">Add-Post</a>
+        <a class="nav-link" href="/addPost">Add-Note</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="/friends">Friend-Requests</a>
@@ -115,12 +115,12 @@
                 <div class="p-2">
 
                     {{#each this.tags}}
-                    <span>#{{this}}</span>
+                    <span>{{this}}</span>
 
                     {{/each}}
                 </div>
                 <div class="ml-auto p-2">
-
+                    <a href="addPost/edit/{{editid}}" class="btn btn-info" role="button" class="btn btn-primary">Edit</a>
                     <button onclick="delete_note(this, {{this._id}},{{@index}})" style="font-size:11px;" type="button"
                         class="btn btn-danger">Delete</button>
 
@@ -137,6 +137,7 @@
                 </div>
 
                 {{/each}}
+
             </div>
             <div class="input-group">
                 <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
