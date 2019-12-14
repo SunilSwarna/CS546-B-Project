@@ -36,7 +36,7 @@ router.get('/', loginMiddleware,async(req, res) => {
         // console.log(userNotes[0].comments)
         return res.status(200).render("addPost",{ title: "AddPost page" ,tags: tags, "notes":userNotes});
     } catch (e) {
-        res.status(404).render("errors",{ "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 router.get('/edit/:id', loginMiddleware,async(req, res) => {
@@ -65,7 +65,7 @@ router.get('/edit/:id', loginMiddleware,async(req, res) => {
        
      catch (e) {
          console.log(e)
-        res.status(404).render("errors",{ "error": e });
+         res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 

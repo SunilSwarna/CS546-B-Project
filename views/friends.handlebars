@@ -68,18 +68,21 @@
           {{#each frds}}
           <p style="display:inline-flexbox">
             <span style="top:9px;display: inline-block;" class="glyphicon glyphicon-user">{{this.name}}</span>
-          
-            <label id="accept" style="font-size:9px;margin-top:10px" type="button" onClick="accept_friend(this, {{this.userId}} )"
-              class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></label>
-            <label id="reject" style="font-size:9px;margin-top:10px" type="button" onClick="delete_friend(this, {{this.userId}})"
-              class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></label>
+
+            <label id="accept" style="font-size:9px;margin-top:10px" type="button"
+              onClick="accept_friend(this, {{this.userId}} )" class="btn btn-success"><span
+                class="glyphicon glyphicon-ok"></span></label>
+            <label id="reject" style="font-size:9px;margin-top:10px" type="button"
+              onClick="delete_friend(this, {{this.userId}})" class="btn btn-danger"><span
+                class="glyphicon glyphicon-remove"></span></label>
 
           </p>
           {{/each}}
 
           {{else}}
-          <li class='list-group-item list-group-item-info col-md-3 offset-2'>No new requests</li>
-
+          <ul>
+            <li class='list-group-item list-group-item-info col-md-3 offset-2'>No new requests</li>
+          </ul>
           {{/if}}
 
         </div>
