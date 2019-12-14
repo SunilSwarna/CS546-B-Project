@@ -6,13 +6,13 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/addPost">Add-Post</a>
+        <a style="color: #a0a3a5;" class="nav-link" href="/addPost">Add-Note</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/friends">Friend-Requests</a>
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends">Friend-Requests</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/friends/posts">Friends-Posts</a>
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends/posts">Friends-Posts</a>
       </li>
     </ul>
     <ul class="navbar-nav" style="margin-top: 1%;">
@@ -20,7 +20,7 @@
         <span class="navbar-brand ml-auto p-2">{{testName}}</span>
       </li>
       <li class="nav-item">
-        <a class="nav-link ml-auto p-2" href="/logout">Logout</a>
+        <a style="color: #a0a3a5;" class="nav-link ml-auto p-2" href="/logout">Logout</a>
       </li>
     </ul>
 
@@ -33,10 +33,11 @@
     <div class="col-sm-5 ">
       <div class="card">
         <div class="card-header">
-         <span style="font-weight: bold;" class="row d-flex justify-content-between">Search Friends </span> 
+          <span style="font-weight: bold;" class="row d-flex justify-content-between">Search Friends </span>
           <div class="d-flex mt-5">
             <input id="search" class="form-control col" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-info ml-2" type="submit" id="searchFriends">Search</button>
+            <button style="background-color:#00829b" class="btn btn-info ml-2" type="submit"
+              id="searchFriends">Search</button>
           </div>
         </div>
         <div class="card-body">
@@ -47,7 +48,7 @@
               <span class="sr-only">Loading...</span>
             </div>
             <div id="friendMsg">
-              
+
             </div>
             <ul id="listfriends" class="list-group">
             </ul>
@@ -58,8 +59,8 @@
     <div class="col-sm-6 flex-fill">
       <div class="card">
         <div class="card-header">
-          <span style="font-weight: bold;" class="row d-flex justify-content-between">Friend Suggestions </span> 
-          
+          <span style="font-weight: bold;" class="row d-flex justify-content-between">Friend Suggestions </span>
+
         </div>
         <div>
 
@@ -67,17 +68,18 @@
           {{#each frds}}
           <p style="display:inline-flexbox">
             <span style="top:9px;display: inline-block;" class="glyphicon glyphicon-user">{{this.name}}</span>
-            <button style="font-size:9px;margin-top:10px" type="button" onClick="accept_friend(this, {{this.userId}} )"
-              class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></button>
-            <button style="font-size:9px;margin-top:10px" type="button" onClick="delete_friend(this, {{this.userId}})"
-              class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+          
+            <label id="accept" style="font-size:9px;margin-top:10px" type="button" onClick="accept_friend(this, {{this.userId}} )"
+              class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></label>
+            <label id="reject" style="font-size:9px;margin-top:10px" type="button" onClick="delete_friend(this, {{this.userId}})"
+              class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></label>
 
           </p>
           {{/each}}
 
           {{else}}
           <li class='list-group-item list-group-item-info col-md-3 offset-2'>No new requests</li>
-      
+
           {{/if}}
 
         </div>

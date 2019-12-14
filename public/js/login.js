@@ -26,7 +26,7 @@ submit.addEventListener("click", (event) => {
 
     $("#passwordHelp").hide();
     $("#validateEmail").hide();
-
+    $('#message').hide()
     if(  $('#dbError').is(':visible') )   $('#dbError').hide()
 
     var email = document.getElementById("inputEmail").value
