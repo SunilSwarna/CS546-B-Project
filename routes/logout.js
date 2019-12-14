@@ -13,6 +13,7 @@ const logoutMiddleware = (req, res, next) => {
 router.get('/', logoutMiddleware, async(req, res) => {
     res.clearCookie("AuthCookie");
     req.session.logged = false;
+    req.session.userInfo = undefined
     res.redirect("/");
     
 });
