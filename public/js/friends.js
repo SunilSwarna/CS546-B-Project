@@ -108,8 +108,6 @@ function accept_friend(e, id) {
 }
 
 function delete_friend(e, id) {
-    console.log(id)
-    console.log(id);
     
         var requestConfig = {
             method: "POST",
