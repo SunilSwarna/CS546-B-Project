@@ -41,14 +41,14 @@ submit.addEventListener("click", (event) => {
                 else if(person.status && person.status ==1){
                     list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
                 `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
-                    "<button style='margin-left:15px' class='btn btn-primary btn-sm' disabled>"+
+                    "<button style='margin-left:15px;color: rgb(255, 255, 255);background-color: #007bc8;' class='btn btn-primary btn-sm' disabled>"+
                     'Already Friend</button>' +
                     '</li>';
                 }
                 else{
                     list_friends.innerHTML += '<li style="border: none" class="list-group-item d-flex justify-content-between">' +
                 `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
-                    "<button style='margin-left:15px' class='btn btn-primary btn-sm' onClick='add_friend(this,\""+String(person.friendID)+"\" )'>"+
+                    "<button style='margin-left:15px;color: rgb(255, 255, 255);background-color: #007bc8;' class='btn btn-primary btn-sm' onClick='add_friend(this,\""+String(person.friendID)+"\" )'>"+
                     'Add Friend</button>' +
                     '</li>';
                 }
