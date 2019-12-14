@@ -36,6 +36,8 @@ const createNotes = async function createNotes(userID, title, content, radius, l
     const insertInfo = await notesCollection.insertOne(noteInfo);
 
     if (insertInfo.insertedCount === 0) throw "Could not add user";
+    const id = insertInfo.insertedId.toString();
+    return id;
 }
 
 const findNotes = async function findNote(latitude, longitude, radius) {

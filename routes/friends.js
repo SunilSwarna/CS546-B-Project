@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
         var showFrds = frds.length > 0 ? true : false
         return res.render("friends", { frds, showFrds });
     } catch (e) {
+        console.log(e)
         res.status(404).json({ "error": e });
     }
 })
