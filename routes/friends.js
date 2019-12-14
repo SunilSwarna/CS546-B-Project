@@ -38,7 +38,7 @@ router.get('/', loginMiddleware, async (req, res) => {
         return res.render("friends", { title: "Friends", frds, showFrds });
     } catch (e) {
         console.log(e)
-        res.status(404).render("errors",{ "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 
@@ -88,7 +88,7 @@ router.post('/search', loginMiddleware, async (req, res) => {
 
         res.json({ name, temp_name_results, found });
     } catch (e) {
-        res.status(404).render("errors", { "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 
@@ -113,7 +113,7 @@ router.get('/id/:userid', loginMiddleware, async (req, res) => {
         // console.log(userNotes[0].comments)
         return res.status(200).render("posts", { title: "AddPost page", tags: tags, "notes": userNotes });
     } catch (e) {
-        res.status(404).render("errors", { "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 
 })
@@ -171,9 +171,9 @@ router.post("/delete/:id", loginMiddleware, async (req, res) => {
 router.get('/posts',loginMiddleware, async (req, res) => {
     try {
 
-        return res.render("friendsposts", {});
+        return res.render("friendsposts", {title: "Friends Posts"});
     } catch (e) {
-        res.status(404).render("errors", { "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 
@@ -211,7 +211,7 @@ router.post('/getPosts/name',loginMiddleware, async (req, res) => {
         // return res.json({ name: req.body.name })
     } catch (e) {
         // render to friendsposts with error 
-        res.status(404).render("errors", { "error": e });
+        res.status(404).render("errors",{ title:"error",error: e });
     }
 })
 

@@ -29,7 +29,7 @@
 </div>
 
 <div class="bs-example">
-    <h1 class="border-bottom pb-3 mb-4">add note here</h1>
+    <h1 class="border-bottom pb-3 mb-4">Add Note Here</h1>
     <form class="needs-validation" action="/addPost" method="post">
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="note_title">Note Title:</label>
@@ -67,18 +67,14 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="Tags">Tags:</label>
+            <label class="col-lg-2 col-form-label" for="tagsdisp">Tags:</label>
 
-            <select class="selectpicker" name="tags" data-live-search="true" data-size="5" multiple>
+            <select class="selectpicker" id="tagsdisp" name="tags" data-live-search="true" data-size="5" multiple>
                 {{#each tags}}
                 <option value={{this.tag}}>{{this.tag}}</option>
                 {{/each}}
             </select>
 
-        </div>
-        <div class="col-sm-3">
-            <small id="validateradius" class="text-danger">
-            </small>
         </div>
         <div class="form-group row">
             <div class="col-lg-4 offset-sm-3">
@@ -108,7 +104,6 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{this.content}}</p>
-            {{!-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
         </div>
         <div class="card-body">
             <div class="row">
@@ -120,7 +115,7 @@
                     {{/each}}
                 </div>
                 <div class="ml-auto p-2">
-                    <a style="color: rgb(255, 255, 255); background-color: #00829b;" href="/addPost/edit/{{editid}}" class="btn btn-info" role="button" class="btn btn-primary">Edit</a>
+                    <a style="color: rgb(255, 255, 255); background-color: #00829b;" href="/addPost/edit/{{editid}}" class="btn btn-info" role="button">Edit</a>
                     <button onclick="delete_note(this, {{this._id}},{{@index}})" style="font-size:11px;color: rgb(255, 255, 255); background-color: #d4423c;" type="button"
                         class="btn btn-danger">Delete</button>
 

@@ -1,6 +1,6 @@
 
 $('#loading').hide()
-$('#friendMsg').hide()
+// $('#friendMsg').hide()
 
 var submit = document.getElementById("searchFriends");
 
