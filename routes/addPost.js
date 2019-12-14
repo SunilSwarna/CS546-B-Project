@@ -36,6 +36,55 @@ router.get('/', loginMiddleware,async(req, res) => {
         res.status(404).json({ "error": e });
     }
 })
+router.get('/edit/:id', loginMiddleware,async(req, res) => {
+    try {
+        
+        var editNote = await notes.getNoteById("5df2c0b23904483dbcf70c2e");
+        let modiftag= tags;
+        for(i=0;i<tags.length;i++){
+            modiftag[i].sel=false;
+        }
+
+        for(i=0;i<editNote.tags.length;i++){
+            for(j=0;j<tags.length;j++){
+                if(editNote.tags[i]==tags[j].tag){
+                    modiftag[j].sel=true;
+                }
+            }
+        }
+        console.log(modiftag)
+        return res.status(200).render("editnote",{ title: "edit page" ,tags: modiftag, note:editNote});
+        }
+        // console.log(userNotes[0].comments)
+       
+     catch (e) {
+         console.log(e)
+        res.status(404).json({ "error": e });
+    }
+})
+
+
+router.post('/edit/:id', loginMiddleware,async(req, res) => {
+    console.log(req.body)
+
+    try {
+        console.log(req.body)
+        
+        if (!req.body) return res.status(400).render("addPost", { title: "AddPost Page", error: "Bad Request" });
+        // if 404 status the js files are not loaded properly & html will be mpty always
+        // if (!req.body.note_title || !req.body.NoteContent || !req.body.radius) {
+        //     return res.status(400).render("addPost", { title: "AddPost page", error: "One of the fileds is missing" })
+        // }
+        console.log(req.params.id)
+        await notes.updateNote(req.params.id,req.body.note_title,req.body.NoteContent,req.body.radius,req.body.tags)
+    //    // res.cookie("userData", { "message": req.body.firstName + " is Successfully Signed up!" });
+        return res.redirect("/addPost");
+    } catch (e) {
+        console.log(e)
+        console.log("Hey I am entering")
+        return res.status(404).render("addPost", { title: "AddPost page", error: e })
+    }
+})
 
 router.post('/',loginMiddleware, async(req, res) => {
     try {
