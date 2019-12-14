@@ -15,7 +15,7 @@ const constructorMethod = app => {
     app.use("/location", locationRoutes);
     app.use("/logout", logoutRoutes);
     app.use("*", (req, res) => {
-        res.status(404).json({ "error": "Please Enter a Valid URL" });
+        res.status(404).render("errors",{ "error": "Please Enter a Valid URL" });
     });
 };
 
