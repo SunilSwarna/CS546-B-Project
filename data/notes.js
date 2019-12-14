@@ -149,7 +149,7 @@ const getNoteById = async function getNoteById(id) {
 }
 const updateNote = async function updateNote(id, title, content, radius,tags) {
 
-   console.log(String(id))
+   
     const note = await this.getNoteById(String(id));
     const notesCollection = await notesData();
     if (!title) {
@@ -163,7 +163,9 @@ const updateNote = async function updateNote(id, title, content, radius,tags) {
     if (!radius) {
         radius = note.radius;
     }
-
+    if(!tags){
+        tags = []
+    }
     let updateInfo = {
         userID: note.userID,
         title: title,

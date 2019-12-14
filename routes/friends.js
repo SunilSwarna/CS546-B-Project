@@ -1,12 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const data = require("../data");
-const tags=data.tags;
+const tags = data.tags;
 const notes = data.notes;
 const comments = data.comments
 const users = data.users;
+const xss = require("xss");
 
-router.get('/', async (req, res) => {
+const loginMiddleware = (req, res, next) => {
+    if (!req.session.logged) {
+        res.status(403).render("login", { title: "Login Page", error: "Access denied." });
+    } else {
+        res.locals.testName = req.session.userInfo.firstName + " " + req.session.userInfo.lastName
+        next();
+    }
+}
+
+router.get('/', loginMiddleware, async (req, res) => {
     try {
         var logged_info = req.session.userInfo
         var { friends } = await data.friends.get(logged_info.friendID)
@@ -25,16 +35,17 @@ router.get('/', async (req, res) => {
         }
         // console.log(frds)
         var showFrds = frds.length > 0 ? true : false
-        return res.render("friends", { frds, showFrds });
+        return res.render("friends", { title: "Friends", frds, showFrds });
     } catch (e) {
         res.status(404).json({ "error": e });
     }
 })
 
-router.post('/search', async (req, res) => {
+router.post('/search', loginMiddleware, async (req, res) => {
     try {
         // validate if body.name is there if not throw error
-        var name = req.body.name
+        if (!req.body.name) throw "Name is not provided in request!"
+        var name = xss(req.body.name, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
         var logged_info = req.session.userInfo
         const db_results = await data.friends.searchName(name);
         var name_results = db_results.filter(user => {
@@ -76,50 +87,57 @@ router.post('/search', async (req, res) => {
 
         res.json({ name, temp_name_results, found });
     } catch (e) {
-        res.status(404).json({ "error": "e" });
+        res.status(404).render("errors", { "error": e });
     }
 })
 
-router.get('/id/:userid', async(req, res)=>{
-    if(!req.params.userid) return res.json({error:"Bad Request! Missing parameter"})
-    var userid = req.params.userid
+router.get('/id/:userid', loginMiddleware, async (req, res) => {
+    if (!req.params.userid) return res.json({ error: "Bad Request! Missing parameter" })
+    var userid = xss(req.params.userid, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
     try {
         var userNotes = await notes.findNotesByUserID(userid)
-        const {firstName, lastName} = await users.getUserByID(userid)
+        const { firstName, lastName } = await users.getUserByID(userid)
 
-        for(let i=0;i<userNotes.length;i++){
-            userNotes[i].userID = '"' + userNotes[i].userID +'"'
+        for (let i = 0; i < userNotes.length; i++) {
+            userNotes[i].userID = '"' + userNotes[i].userID + '"'
             userNotes[i]._id = '"' + String(userNotes[i]._id) + '"'
-            userNotes[i].name = firstName+" "+lastName
-            for(let j=0; j<userNotes[i].comments.length ;j++){
-                var {userInfo, commentOne} = await comments.getUserNamebyComment(userNotes[i].comments[j].commentID)
-                userNotes[i].comments[j].name = userInfo.firstName+ " "+userInfo.lastName 
+            userNotes[i].name = firstName + " " + lastName
+            for (let j = 0; j < userNotes[i].comments.length; j++) {
+                var { userInfo, commentOne } = await comments.getUserNamebyComment(userNotes[i].comments[j].commentID)
+                userNotes[i].comments[j].name = userInfo.firstName + " " + userInfo.lastName
                 userNotes[i].comments[j].commented_at = commentOne.commented_at
                 userNotes[i].comments[j].description = commentOne.description
             }
         }
         // console.log(userNotes[0].comments)
-        return res.status(200).render("posts",{ title: "AddPost page" ,tags: tags, "notes":userNotes});
+        return res.status(200).render("posts", { title: "AddPost page", tags: tags, "notes": userNotes });
     } catch (e) {
-        res.status(404).json({ "error": e });
+        res.status(404).render("errors", { "error": e });
     }
 
 })
-router.post("/add/:id", async (req, res) => {
-    // validate if body.name is there if not throw error
+
+router.post("/add/:id", loginMiddleware, async (req, res) => {
+
     // 2 in the loggedin user db & 0 in the requested user db
-    var friend_id = req.params.id; // friend object id
-    var db_friend_id = await data.friends.get(friend_id) // get userId of friend
-    var logged_info = req.session.userInfo
-    // addFriend takes logged user friendId, logged user object-id, friend-user id
-    const addFriend = await data.friends.addFriend(logged_info.friendID, logged_info._id, db_friend_id.userID)
-    res.json({ addFriend });
+    try {
+        if (!req.params.id) throw "Friend Id is not provided";
+        var friend_id = xss(req.params.id, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
+        // var friend_id = req.params.id; // friend object id
+        var db_friend_id = await data.friends.get(friend_id) // get userId of friend
+        var logged_info = req.session.userInfo
+        // addFriend takes logged user friendId, logged user object-id, friend-user id
+        const addFriend = await data.friends.addFriend(logged_info.friendID, logged_info._id, db_friend_id.userID)
+        res.json({ addFriend });
+    }
+    catch (e) {
+        res.json({ "added": false });
+    }
 });
 
-router.post("/accept/:id", async (req, res) => {
-    // validate if body.name is there if not throw error
-    // 2 in the loggedin user db & 0 in the requested user db
-    var friend_user_id = req.params.id;
+router.post("/accept/:id", loginMiddleware, async (req, res) => {
+    var friend_user_id = xss(req.params.id, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
+    // var friend_user_id = req.params.id;
     // var db_friend_id = await data.friends.get(friend_id)
     var logged_info = req.session.userInfo
     // acceptFriend takes logged user friendId, logged user object-id, friend-user id
@@ -133,10 +151,9 @@ router.post("/accept/:id", async (req, res) => {
     }
 });
 
-router.post("/delete/:id", async (req, res) => {
-    // validate if body.name is there if not throw error
-    // 2 in the loggedin user db & 0 in the requested user db
-    var friend_user_id = req.params.id;
+router.post("/delete/:id", loginMiddleware, async (req, res) => {
+    var friend_user_id = xss(req.params.id, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
+
     // var db_friend_id = await data.friends.get(friend_id)
     var logged_info = req.session.userInfo
     // acceptFriend takes logged user friendId, logged user object-id, friend-user id
@@ -150,19 +167,20 @@ router.post("/delete/:id", async (req, res) => {
     }
 });
 
-router.get('/posts', async (req, res) => {
+router.get('/posts',loginMiddleware, async (req, res) => {
     try {
 
         return res.render("friendsposts", {});
     } catch (e) {
-        res.status(404).json({ "error": e });
+        res.status(404).render("errors", { "error": e });
     }
 })
 
-router.post('/getPosts/name', async (req, res) => {
+router.post('/getPosts/name',loginMiddleware, async (req, res) => {
     try {
+        var name= xss(req.body.name, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
 
-        var name = req.body.name
+        // var name = req.body.name
         var logged_info = req.session.userInfo
         const db_results = await data.friends.searchName(name);
 
@@ -192,7 +210,7 @@ router.post('/getPosts/name', async (req, res) => {
         // return res.json({ name: req.body.name })
     } catch (e) {
         // render to friendsposts with error 
-        res.status(404).json({ "error": e });
+        res.status(404).render("errors", { "error": e });
     }
 })
 

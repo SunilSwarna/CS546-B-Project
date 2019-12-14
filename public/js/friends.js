@@ -6,7 +6,7 @@ var submit = document.getElementById("searchFriends");
 
 submit.addEventListener("click", (event) => {
 
-
+    $('#friendMsg').hide()
     var name = document.getElementById("search").value
     event.preventDefault();
 
@@ -25,7 +25,7 @@ submit.addEventListener("click", (event) => {
         };
     
         $.ajax(requestConfig).then(function (responseMessage) {
-            console.log(responseMessage)
+            // console.log(responseMessage)
             var list_friends = document.getElementById("listfriends");
             $('#listfriends').empty()
             for(let i=0; i<responseMessage.temp_name_results.length; i++)
@@ -55,6 +55,13 @@ submit.addEventListener("click", (event) => {
                 
             }
             
+            if(responseMessage.found == false){
+                $('#friendMsg').show()
+                $('#friendMsg').empty()
+                var friend_message = document.getElementById("friendMsg");
+                var info = "No Friends with Name "+String(responseMessage.name)
+                friend_message.innerHTML += `<li class='list-group-item list-group-item-info'>${info}</li>`
+            }
         });
 
     }
