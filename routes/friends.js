@@ -38,7 +38,7 @@ router.get('/', loginMiddleware, async (req, res) => {
         return res.render("friends", { title: "Friends", frds, showFrds });
     } catch (e) {
         console.log(e)
-        res.status(404).json({ "error": e });
+        res.status(404).render("errors",{ "error": e });
     }
 })
 
