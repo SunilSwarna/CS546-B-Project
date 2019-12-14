@@ -37,7 +37,7 @@ router.get('/', loginMiddleware, async (req, res) => {
         }
         res.render("home", { title: "Pied Piper", "notes": userNotes, "tags": tags });
     } catch (e) {
-        res.status(404).json({ "error": e });
+        res.status(404).render("errors",{ "error": e });
     }
 })
 
@@ -153,7 +153,7 @@ router.post('/', loginMiddleware, async (req, res) => {
                 }
             }
             catch (e) {
-                return res.json({ error: e })
+                res.status(404).render("errors",{ "error": e });
             }
         }
     }
@@ -172,7 +172,7 @@ router.post('/', loginMiddleware, async (req, res) => {
             }
         }
         catch (e) {
-            return res.json({ error: e })
+            res.status(404).render("errors",{ "error": e });
         }
     }
     else {
@@ -196,7 +196,7 @@ router.post('/', loginMiddleware, async (req, res) => {
             }
         }
         catch (e) {
-            return res.json({ error: e })
+            res.status(404).render("errors",{ "error": e });
         }
 
     }

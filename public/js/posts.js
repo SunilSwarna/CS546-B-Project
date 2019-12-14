@@ -32,7 +32,7 @@ submit.addEventListener("click", (event) => {
             {
                 var person = responseMessage.temp_name_results[i]
                 
-                    list_friends.innerHTML += `<a href='id/${person._id}' style='border: none' class='list-group-item list-group-item-action active d-flex justify-content-between mb-2'>` +
+                    list_friends.innerHTML += `<a href='/friends/id/${person._id}' style='border: none' class='list-group-item list-group-item-action active d-flex justify-content-between mb-2'>` +
                 `<span class="mt-2">${person.firstName+" "+ person.lastName}</span>`+
                     '</a>';
             
