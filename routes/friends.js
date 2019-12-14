@@ -140,6 +140,7 @@ router.post("/accept/:id", loginMiddleware, async (req, res) => {
     var friend_user_id = xss(req.params.id, { whiteList: [], stripIgnoreTag: true, stripIgnoreTagBody: ["script"] })
     // var friend_user_id = req.params.id;
     // var db_friend_id = await data.friends.get(friend_id)
+    // console.log("Fine")
     var logged_info = req.session.userInfo
     // acceptFriend takes logged user friendId, logged user object-id, friend-user id
     try {
