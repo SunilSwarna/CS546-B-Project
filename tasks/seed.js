@@ -44,6 +44,7 @@ async function main() {
 
         await comments.createComment(sunilnote_id,rahul_id,"I agree with the title")
         await comments.createComment(sunilnote_id,divya_id,"I agree with the title too")
+        await comments.createComment( sunil2note_id,kunj1_id,"kunj commented this")
 
        let sunil=await users.getUserByID(sunil_id)
        let sunil2=await users.getUserByID(sunil2_id)
@@ -56,93 +57,10 @@ async function main() {
         await friends.addFriend(sunil.friendID,sunil_id,divya_id)
         await friends.addFriend(kunj.friendID,kunj_id,sunil_id)
        await friends.approveFriend(rahul.friendID,rahul_id,sunil_id)
-       // await Users.addAvatar("admin2");
-        // await Users.addAvatar("admin3");
-        // await Users.addAvatar("PrecisionWing");
-        // await Users.addAvatar("Lumen-NyaRuko");
-        // await Users.addAvatar("HeroLonely_PvP");
-        // await Users.addAvatar("CanadianMason");
-        // await Users.addAvatar("AGI4RexIegend01");
-        // await Users.addAvatar("7gates_of_hell");
-        // await Users.addAvatar("Silk2g");
-        // await Users.addAvatar("_Ecli9seS7y");
-        // await Users.addAvatar("HuyaTV-11748951");
-        // await Users.addAvatar("MBT_Layzan");
-        // await Users.addAvatar("Lt-Zomb1e");
-        // await Users.addAvatar("Superiorities");
-        // await Users.addAvatar("HEHLL1225");
-        // await Users.addAvatar("SYM-Incarnate");
-        // await Users.addAvatar("FLOT-Crotan");
-        // await Users.addAvatar("leonid_47");
-        // await Users.addAvatar("AZGD-HungMammoth");
-
-
-
-        // let admin1 = await Users.findUserByUserName("admin1");
-        // let admin2 = await Users.findUserByUserName("admin2");
-        // let admin3 = await Users.findUserByUserName("admin3");
-        // let CanadianMason = await Users.findUserByUserName("CanadianMason");
-        // let HungMammoth = await Users.findUserByUserName("AZGD-HungMammoth");
-        // let Silk2g = await Users.findUserByUserName("Silk2g");
-
-
-        // //add reports
-        // let report1 = await Report.addReport("admin1", "CanadianMason", "aimbot", { path: "public/uploads/seed1.png" });
-        // CanadianMason.received_reports.push(report1._id);
-        // admin1.created_reports.push(report1._id);
-        // await Users.updateUser(CanadianMason._id, CanadianMason);
-        // await Users.updateUser(admin1._id, admin1);
-
-        // let report2 = await Report.addReport("Silk2g", "AZGD-HungMammoth", "test the report", { path: "public/uploads/seed2.jpg" });
-        // HungMammoth.received_reports.push(report2._id);
-        // Silk2g.created_reports.push(report2._id);
-        // await Users.updateUser(HungMammoth._id, HungMammoth);
-        // await Users.updateUser(Silk2g._id, Silk2g);
-
-        // //add polls
-        // let poll1 = await Poll.addPoll("CanadianMason");
-        // await Users.newAdminPendingVote(poll1);
-        // CanadianMason.label_status = "Processing";
-        // await Users.updateUser(CanadianMason._id, CanadianMason);
-        // // admin1.pending_votes.push(poll1._id);
-        // // admin2.pending_votes.push(poll1._id);
-        // // admin3.pending_votes.push(poll1._id);
-        // // await Users.updateUser(admin1._id, admin1);
-        // // await Users.updateUser(admin2._id, admin2);
-        // // await Users.updateUser(admin3._id, admin3);
-
-        // let poll2 = await Poll.addPoll("AZGD-HungMammoth");
-        // await Users.newAdminPendingVote(poll2);
-        // HungMammoth.label_status = "Processing";
-        // await Users.updateUser(HungMammoth._id, HungMammoth);
-        // // admin1.pending_votes.push(poll2._id);
-        // // admin2.pending_votes.push(poll2._id);
-        // // admin3.pending_votes.push(poll2._id);
-        // // await Users.updateUser(admin1._id, admin1);
-        // // await Users.updateUser(admin2._id, admin2);
-        // // await Users.updateUser(admin3._id, admin3);
-
-        // //add comments
-        // let comment1 = await Comment.addComment("admin3", "I agree he's a cheater.");
-        // report1 = await Report.getReportByReportedPlayer("CanadianMason");
-        // report1.comments.push(comment1._id);
-        // await Report.updateReport(report1._id, report1)
-
-        // let comment2 = await Comment.addComment("SYM-Incarnate", "haha");
-        // report2 = await Report.getReportByReportedPlayer("AZGD-HungMammoth");
-        // report2.comments.push(comment2._id);
-        // await Report.updateReport(report2._id, report2)
-
-        // //add appeals
-        // //await Appeal.addAppeal("AZGD-HungMammoth", "My friend is trolling");
-
-        // //for the appeal one, update his canAppeal to be false.
-        // let appealedGuy = await Users.findUserByUserName("AZGD-HungMammoth");
-        // appealedGuy.canAppeal = false;
-        // await Users.updateUser(appealedGuy._id, appealedGuy);
-
+      
+      
         console.log('Done seeding database');
-        console.log('All these seeded users have a default password of \"123\"')
+        console.log('All user have same password "phill"')
 
         //await db.close();
     } catch (e) {
