@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "name": "cs546-b-project",
     "version": "1.0.0",
     "description": "First commit to master  second commit to master",
@@ -31,4 +32,23 @@
         "password-hash": "^1.2.2",
         "xss": "^1.0.6"
     }
+=======
+  "name": "cs546-b-project",
+  "version": "1.0.0",
+  "description": "First commit to master  second commit to master Third commit to master",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SunilSwarna/CS546-B-Project.git"
+  },
+  "author": "Kunj Desai 10444511",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SunilSwarna/CS546-B-Project/issues"
+  },
+  "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme"
+>>>>>>> Stashed changes
 }

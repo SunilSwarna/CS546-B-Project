@@ -1,6 +1,14 @@
 {
     "mongoConfig": {
       "serverUrl": "mongodb://localhost:27017/",
+<<<<<<< Updated upstream
       "database": "Final_Project"
+=======
+<<<<<<< Updated upstream
+      "database": "Final_Year_Project"
+=======
+      "database": "Kunj_Desai_lab7"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
   }
