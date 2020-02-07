@@ -32,7 +32,7 @@ const searchName = async function searchName(name) {
     const nameFound = await usersCollection.find({ $or: [{ firstName: regex }, { lastName: regex }] }).toArray();
 
     if (nameFound.length < 1) {
-        return "No such name found.";
+        return [];
     }
 
     return nameFound;
@@ -51,12 +51,12 @@ const updateFriendID = async function updateFriendID(userID, friendID) {
     return true;
 }
 
-const addFriend = async function addFriend(id, userID, friendID, status) {
+const addFriend = async function addFriend(id, userID, friendID) {
 
     if (!id) throw "No id provided";
     if (!userID) throw "No friend id provided";
     if (!friendID) throw "No friend id provided";
-    if (status == undefined) throw "No status provided";
+   
 
     const friendsCollection = await friendsData();
     const usersCollection = await usersData();
@@ -65,14 +65,14 @@ const addFriend = async function addFriend(id, userID, friendID, status) {
     var o_f_id = new ObjectId(friendID);
 
     const userInfo = await usersCollection.findOne({ _id: o_f_id });
-    if (userInfo.length == 0) throw "No user with that id";
+    if (!userInfo) throw "No user with that id";
 
 
     var o_id = new ObjectId(id);
 
     const friendInfo = {
         friendID: friendID,
-        status: status
+        status: 2
     }
 
     const updateInfo = await friendsCollection.updateOne({ _id: o_id }, { $addToSet: { friends: friendInfo } });
@@ -83,7 +83,7 @@ const addFriend = async function addFriend(id, userID, friendID, status) {
     var o_ff_id = new ObjectId(userInfo.friendID);
     const friendInfo1 = {
         friendID: userID,
-        status: status
+        status: 0
     }
 
     const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id }, { $addToSet: { friends: friendInfo1 } });
@@ -94,12 +94,12 @@ const addFriend = async function addFriend(id, userID, friendID, status) {
 }
 
 
-const approveFriend = async function approveFriend(id, userID, friendID, status) {
+const approveFriend = async function approveFriend(id, userID, friendID) {
 
-    if (!id) throw "No id provided";
-    if (!userID) throw "No friend id provided";
-    if (!friendID) throw "No friend id provided";
-    if (status == undefined) throw "No status provided";
+    if (!id) throw "user id provided";
+    if (!userID) throw "No friend id provided for the user";
+    if (!friendID) throw "No user id provided for the friend";
+   
 
     const friendsCollection = await friendsData();
     const usersCollection = await usersData();
@@ -114,14 +114,14 @@ const approveFriend = async function approveFriend(id, userID, friendID, status)
     var o_id = new ObjectId(id);
 
 
-    const updateInfo = await friendsCollection.updateOne({ _id: o_id, friends: { $elemMatch: { friendID: friendID } } }, { $set: { "friends.$.status": status } });
+    const updateInfo = await friendsCollection.updateOne({ _id: o_id, friends: { $elemMatch: { friendID: friendID } } }, { $set: { "friends.$.status": 1 } });
 
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
 
     var o_ff_id = new ObjectId(userInfo.friendID);
 
-    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id, friends: { $elemMatch: { friendID: userID } } }, { $set: { "friends.$.status": status } });
+    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id, friends: { $elemMatch: { friendID: userID } } }, { $set: { "friends.$.status": 1 } });
     if (!updateInfo1.matchedCount && !updateInfo1.modifiedCount) throw 'Update failed';
 
     return true;
@@ -136,7 +136,7 @@ const get = async function get(id) {
     const friendsCollection = await friendsData();
 
     const friendInfo = await friendsCollection.findOne({ _id: o_id });
-    if (friendInfo === null) throw "No band with that id";
+    if (friendInfo === null) throw "No friend with that id";
 
     return friendInfo;
 }
@@ -149,7 +149,7 @@ const removeFriend = async function removeFriend(id, userID, friendID) {
 
     const friendsCollection = await friendsData();
     var o_id = new ObjectId(id);
-    const updateInfo = await friendsCollection.updateOne({ _id: o_id }, { $pull: { friends: { friendID: friendID.toString(), status: 1 } } });
+    const updateInfo = await friendsCollection.updateOne({ _id: o_id }, { $pull: { friends: { friendID: friendID.toString(), status: 0 } } });
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
     const usersCollection = await usersData();
@@ -158,7 +158,7 @@ const removeFriend = async function removeFriend(id, userID, friendID) {
 
     const friendInfo = await usersCollection.findOne({ _id: o_f_id });
     var o_ff_id = new ObjectId(friendInfo.friendID);
-    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id }, { $pull: { friends: { friendID: userID.toString(), status: 1 } } });
+    const updateInfo1 = await friendsCollection.updateOne({ _id: o_ff_id }, { $pull: { friends: { friendID: userID.toString(), status: 2 } } });
     if (!updateInfo1.matchedCount && !updateInfo1.modifiedCount) throw 'Update failed';
 
     return true;

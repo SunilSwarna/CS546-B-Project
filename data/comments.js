@@ -1,5 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const commentsData = mongoCollections.comments;
+const usersData = mongoCollections.users;
+
 const notesData = require("./notes");
 var ObjectId = require('mongodb').ObjectId;
 
@@ -9,7 +11,7 @@ const createComment = async function createComment(noteid, userid, description) 
     if (!description || typeof description !== 'string') throw "No description provided."
 
     const commentsCollection = await commentsData();
-    const dateTime = new Date().toLocaleString('en-US');
+    const dateTime = new Date().toDateString('en-US');
     const commentInfo = {
         noteID: noteid,
         userid: userid,
@@ -62,8 +64,29 @@ const removeComment = async function removeComment(id) {
 
     return true;
 }
+
+const getUserNamebyComment = async function  getUserNamebyComment(comment_id){
+    const commentsCollection = await commentsData();
+
+    if (!comment_id || typeof comment_id !== 'string' || !ObjectId.isValid(comment_id)) throw "You must provide a valid comment id.";
+
+    var c_id = new ObjectId(comment_id);
+
+    const commentOne = await commentsCollection.findOne({ _id: c_id });
+
+    if (commentOne === null) throw "No comment found";
+
+    var u_id = new ObjectId(commentOne.userid);
+    const usersCollection = await usersData();
+
+    const userInfo = await usersCollection.findOne({ _id: u_id });
+    if (userInfo == null) throw "No user with that id";
+    return {userInfo, commentOne};
+}
+
 module.exports = {
     createComment,
     getCommentByID,
-    removeComment
+    removeComment,
+    getUserNamebyComment
 }

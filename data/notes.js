@@ -1,16 +1,17 @@
 const mongoCollections = require("../config/mongoCollections");
 const notesData = mongoCollections.notes;
 const commentsData = mongoCollections.comments;
+const usersData = mongoCollections.users;
 const geolib = require('geolib');
 var ObjectId = require('mongodb').ObjectId;
 
-const createNotes = async function createNotes(userID, title, content, location, latitude, longitude) {
-    var locationName;
+const createNotes = async function createNotes(userID, title, content, radius, latitude, longitude ,tags) {
+
     if (!userID) throw "No user provided.";
     if (!title) throw "No title provided.";
     if (!content) throw "No content provided.";
-    if (!location) {
-        locationName = "Stevens Institute of Technology";
+    if (!radius) {
+        radius = 5000
     }
     if (!latitude || !longitude) {
         latitude = 44.5235792;
@@ -19,31 +20,34 @@ const createNotes = async function createNotes(userID, title, content, location,
 
 
     const notesCollection = await notesData();
-    const dateTime = new Date().toLocaleString('en-US');
+    const dateTime = new Date().toDateString('en-US');
     const noteInfo = {
         userID: userID,
         title: title,
         content: content,
-        locationName: locationName,
+        radius: parseInt(radius),
         longitude: longitude,
         latitude: latitude,
         note_createdAt: dateTime,
+        tags: tags,
         comments: []
     }
 
     const insertInfo = await notesCollection.insertOne(noteInfo);
 
     if (insertInfo.insertedCount === 0) throw "Could not add user";
+    const id = insertInfo.insertedId.toString();
+    return id;
 }
 
 const findNotes = async function findNote(latitude, longitude, radius) {
 
     if (!latitude || !longitude) {
-        latitude = 44.5235792;
-        longitute = -89.574563;
+        latitude = 40.745094;
+        longitute = -74.024255;
     }
     if (!radius) {
-        radius = 5;
+        radius = 5000;
     }
     const allNotes = await this.getAllNotes();
     var noteLong, noteLat;
@@ -55,7 +59,8 @@ const findNotes = async function findNote(latitude, longitude, radius) {
         currentNote = allNotes[i];
         noteLong = allNotes[i].longitude;
         noteLat = allNotes[i].latitude;
-        addNote = geolib.isPointWithinRadius({ latitude: noteLat, longitude: noteLong }, { latitude: latitude, longitude: longitude },
+        radius = allNotes[i].radius;
+        addNote = geolib.isPointWithinRadius({ latitude: parseFloat(noteLat), longitude: parseFloat(noteLong) }, { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
             radius
         );
         if (addNote) {
@@ -77,11 +82,16 @@ const getAllNotes = async function getAllNotes() {
 const findNotesByUserID = async function findNotesByUserID(id) {
 
     if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid post id.";
+    var user_id = new ObjectId(id);
+    const usersCollection = await usersData();
 
-    const allNotes = this.getAllNotes();
+    const userInfo = await usersCollection.findOne({ _id: user_id });
+    if (userInfo == null) throw "No user with that id";
+    
+    const allNotes = await this.getAllNotes();
     var notesByUser = [];
     for (var i = 0; i < allNotes.length; i++) {
-        if (allNotes[i].userID === id) {
+        if (allNotes[i].userID == id) {
             notesByUser.push(allNotes[i]);
         }
     }
@@ -95,6 +105,15 @@ const deleteNote = async function deleteNote(id) {
     if (!id || typeof id !== 'string' || !ObjectId.isValid(id)) throw "You must provide a valid string id to remove for";
     const notesCollection = await notesData();
     var o_id = new ObjectId(id);
+    const noteOne = await notesCollection.findOne({ _id: o_id });
+    if(noteOne == null || noteOne ==undefined){
+        throw "No Note with that id"
+    }
+    const commentsCollection = await commentsData();
+    for(let i=0;i<noteOne.comments.length;i++){
+        var c_id = new ObjectId(noteOne.comments[i].commentID);
+        await commentsCollection.findOneAndDelete({ _id: c_id });
+    }
     const deleteInfo = await notesCollection.findOneAndDelete({ _id: o_id });
     if (deleteInfo.value === null) {
         throw `Could not delete with id of ${id}`;
@@ -108,7 +127,9 @@ const getNoteById = async function getNoteById(id) {
     const commentsCollection = await commentsData();
     var o_id = new ObjectId(id);
     const noteOne = await notesCollection.findOne({ _id: o_id });
-
+    if(noteOne == null || noteOne ==undefined){
+        throw "No Note with that id"
+    }
 
     var comment_o_id = [],
         commentObjArr = [];
@@ -128,8 +149,10 @@ const getNoteById = async function getNoteById(id) {
 
     return noteOne;
 }
-const updateNote = async function updateNote(id, title, content, location, latitude, longitude) {
-    const note = this.getNoteById(id);
+const updateNote = async function updateNote(id, title, content, radius,tags) {
+
+   
+    const note = await this.getNoteById(String(id));
     const notesCollection = await notesData();
     if (!title) {
         title = note.title;
@@ -137,24 +160,27 @@ const updateNote = async function updateNote(id, title, content, location, latit
     if (!content) {
         content = note.content;
     }
-    if (!location) {
-        location = note.location;
+   
+  
+    if (!radius) {
+        radius = note.radius;
     }
-    if (!latitude || !longitude) {
-        latitude = note.latitude;
-        longitude = note.longitude;
+    if(!tags){
+        tags = []
     }
-
     let updateInfo = {
         userID: note.userID,
         title: title,
         content: content,
-        location: location,
-        latitude: latitude,
-        longitude: longitude
+        radius: parseInt(radius),
+        longitude: note.longitude,
+        latitude: note.latitude,
+        note_createdAt: note.note_createdAt,
+        tags: tags,
+        comments: note.comments
     }
 
-    const updatedInfo = await notesCollection.replaceOne({ _id: o_id },
+    const updatedInfo = await notesCollection.replaceOne({ _id: note._id },
         updateInfo
     );
     if (updatedInfo.modifiedCount === 0) {
@@ -168,11 +194,11 @@ const updateNote = async function updateNote(id, title, content, location, latit
 const addCommentToNote = async function addCommentToNote(noteID, commentID) {
     const notesCollection = await notesData();
     var o_id = new ObjectId(noteID);
-    const updateInfo = await notesCollection.updateOne({ _id: o_id }, { $addToSet: { comments: { commentID } } });
+    const updateInfo = await notesCollection.updateOne({ _id: o_id }, { $addToSet: { comments: {"commentID":String(commentID) }  } });
 
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
-    return await this.getNoteById(noteID.toString());
+    return await this.getNoteById(String(noteID));
 }
 
 const removeCommentFromNote = async function removeCommentFromNote(noteID, commentID) {

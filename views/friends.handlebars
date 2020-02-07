@@ -1,1 +1,108 @@
-<h1>Friends page under construction</h1>
+<div id="page-container">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+    <span class="navbar-brand">Pied Piper</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link" href="/addPost">Add-Note</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends">Friend-Requests</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends/posts">Friends-Posts</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" style="margin-top: 1%;">
+      <li class="nav-item">
+        <span class="navbar-brand ml-auto p-2">{{testName}}</span>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link ml-auto p-2" href="/logout">Logout</a>
+      </li>
+    </ul>
+
+  </nav>
+
+</div>
+
+<div style="margin-top: 20px;">
+  <div class="row d-flex justify-content-center">
+    <div class="col-sm-5 ">
+      <div class="card">
+        <div class="card-header">
+          <span style="font-weight: bold;" class="row d-flex justify-content-between">Search Friends </span>
+          <div class="d-flex mt-5">
+            <input id="search" class="form-control col" type="search" placeholder="Search" aria-label="Search">
+            <button style="background-color:#00829b" class="btn btn-info ml-2" type="submit"
+              id="searchFriends">Search</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="col-sm-10">
+
+
+            <div id="loading" class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div id="friendMsg">
+
+            </div>
+            <ul id="listfriends" class="list-group">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 flex-fill">
+      <div class="card">
+        <div class="card-header">
+          <span style="font-weight: bold;" class="row d-flex justify-content-between">Friend Suggestions </span>
+
+        </div>
+        <div>
+
+          {{#if showFrds}}
+          {{#each frds}}
+          <p style="display:inline-flexbox">
+            <span style="top:9px;display: inline-block;" class="glyphicon glyphicon-user">{{this.name}}</span>
+
+            <label id="accept" style="font-size:9px;margin-top:10px" type="button"
+              onClick="accept_friend(this, {{this.userId}} )" class="btn btn-success"><span
+                class="glyphicon glyphicon-ok"></span></label>
+            <label id="reject" style="font-size:9px;margin-top:10px" type="button"
+              onClick="delete_friend(this, {{this.userId}})" class="btn btn-danger"><span
+                class="glyphicon glyphicon-remove"></span></label>
+
+          </p>
+          {{/each}}
+
+          {{else}}
+          <ul>
+            <li class='list-group-item list-group-item-info col-md-3 offset-2'>No new requests</li>
+          </ul>
+          {{/if}}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="/js/friends.js"></script>
+
+{{!-- 
+<div class="row align-items-center">
+           <div class="col-6">
+                <div class="card card-block">
+                 Center
+                </div>
+           </div>
+           <div class="col-6">
+                <div class="card card-inverse card-danger">
+                    Taller
+                </div>
+          </div>
+    </div> --}}

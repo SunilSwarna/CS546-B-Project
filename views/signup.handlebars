@@ -61,16 +61,25 @@
         <div class="form-group row">
             <div class="col-lg-4 offset-sm-3">
                 <input id="login" type="submit" class="btn btn-primary" value="SIGN UP">
-                <input type="reset" class="btn btn-secondary" value="Reset">
+                <input type="reset" class="btn btn-outline-secondary" value="Reset">
             </div>
         </div>
     </form>
     <div class="form-group row">
         <p class="col-lg-4 offset-sm-3">
             Already have an account ?
-            <a class="btn btn-primary" href="/" class="link">Login here</a>
+            <a style="background-color: #008a00;" class="btn btn-success link" href="/">Login here</a>
         </p>
     </div>
 </div>
-<div class = "error">{{error}}</div>
-<script src="js/signup.js"></script>
+
+<div id="dbError">
+    {{#if error}}
+    <ul class="list-group col-md-4 offset-1">
+        <li class="list-group-item list-group-item-primary" style="margin-left:35%;background-color: #0062cc78">
+            {{error}}
+        </li>
+    </ul>
+    {{/if}}
+</div>
+<script src="/js/signup.js"></script>
