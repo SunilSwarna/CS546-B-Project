@@ -1,9 +1,11 @@
 {
+<<<<<<< Updated upstream
     "name": "cs546-b-project",
     "version": "1.0.0",
     "description": "First commit to master  second commit to master",
     "main": "app.js",
     "scripts": {
+        "seed": "node ./tasks/seed.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node app.js"
     },
@@ -18,7 +20,6 @@
     },
     "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme",
     "dependencies": {
-        "bcrypt": "^3.0.7",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.4",
         "email-validator": "^2.0.4",
@@ -28,6 +29,26 @@
         "geolib": "^3.1.0",
         "handlebars": "^4.5.3",
         "mongodb": "^3.3.3",
-        "password-hash": "^1.2.2"
+        "password-hash": "^1.2.2",
+        "xss": "^1.0.6"
     }
+=======
+  "name": "cs546-b-project",
+  "version": "1.0.0",
+  "description": "First commit to master  second commit to master Third commit to master",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SunilSwarna/CS546-B-Project.git"
+  },
+  "author": "Kunj Desai 10444511",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SunilSwarna/CS546-B-Project/issues"
+  },
+  "homepage": "https://github.com/SunilSwarna/CS546-B-Project#readme"
+>>>>>>> Stashed changes
 }

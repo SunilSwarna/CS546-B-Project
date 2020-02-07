@@ -1,0 +1,55 @@
+<div id="page-container">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+    <span class="navbar-brand">Pied Piper</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link" href="/addPost">Add-Note</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends">Friend-Requests</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends/posts">Friends-Posts</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" style="margin-top: 1%;">
+      <li class="nav-item">
+        <span class="navbar-brand ml-auto p-2">{{testName}}</span>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link ml-auto p-2" href="/logout">Logout</a>
+      </li>
+    </ul>
+
+  </nav>
+
+</div>
+
+<div style="margin-top: 20px;">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-5 ">
+            <div class="shadow card text-center w-75 offset-1">
+                <div class="card-header">
+                    Friends Posts
+                    <div class="d-flex">
+                        <input id="search" class="form-control col" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <button style="background-color:#00829b;" class="btn btn-info ml-2" type="submit" id="searchFriends">Search</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-10">
+
+                        <div id="listfriends" class="list-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/posts.js"></script>

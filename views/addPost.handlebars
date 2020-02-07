@@ -1,1 +1,156 @@
-<h1>Add post page under construction</h1>
+<div id="page-container">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="font-size: 18px;">
+    <span class="navbar-brand">Pied Piper</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link" href="/addPost">Add-Note</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends">Friend-Requests</a>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link " href="/friends/posts">Friends-Posts</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" style="margin-top: 1%;">
+      <li class="nav-item">
+        <span class="navbar-brand ml-auto p-2">{{testName}}</span>
+      </li>
+      <li class="nav-item">
+        <a style="color: #a0a3a5;" class="nav-link ml-auto p-2" href="/logout">Logout</a>
+      </li>
+    </ul>
+
+  </nav>
+
+</div>
+
+<div class="bs-example">
+    <h1 class="border-bottom pb-3 mb-4">Add Note Here</h1>
+    <form class="needs-validation" action="/addPost" method="post">
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="note_title">Note Title:</label>
+            <div class="col-lg-4">
+                <input type="text" name="note_title" class="form-control" id="note_title" placeholder="Note Title"
+                    required>
+            </div>
+            <div class="col-sm-3">
+                <small id="validateNotetiltle" class="text-danger">
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="NoteContent">Note Content:</label>
+            <div class="col-lg-4">
+                <input type="text" name="NoteContent" class="form-control" id="NoteContent" placeholder="NoteContent"
+                    required>
+            </div>
+            <div class="col-sm-3">
+                <small id="validateNoteContent" class="text-danger">
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="radius">Radius:</label>
+            <div class="col-lg-2">
+                <input type="number" min="0" name="radius" class="form-control" id="radius" placeholder="radius"
+                    required>
+            </div>
+            <div class="col-sm-3">
+                <small id="validateradius" class="text-danger">
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="tagsdisp">Tags:</label>
+
+            <select class="selectpicker" id="tagsdisp" name="tags" data-live-search="true" data-size="5" multiple>
+                {{#each tags}}
+                <option value={{this.tag}}>{{this.tag}}</option>
+                {{/each}}
+            </select>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-4 offset-sm-3">
+                <input id="latitude" type="hidden" name="latitude">
+                <input id="longitude" type="hidden" name="longitude">
+                <input id="notepost" type="submit" class="btn btn-primary" value="Submit">
+
+                <input type="reset" class="btn btn-secondary" value="Reset">
+            </div>
+        </div>
+    </form>
+</div>
+<div id="ajaxError" class="row" style="margin-left: 30%;">
+
+</div>
+<div class="anyClass">
+    {{#if notes.length}}
+    {{#each notes}}
+    <div class="shadow card text-center w-75 offset-1 mb-3" style="border: 3px solid #ccc;" id="{{this._id}}@{{@index}}">
+        <div class="card-header" style="background-color: #337ab7;">
+            <div class="d-flex justify-content-between">
+                <div class="" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.name}}</div>
+                <div class="" style="color: #fff;font-size: 18px;margin-top: 0.5%;">{{this.title}}</div>
+                <div class="" style="color: #fff;font-size: 18px;">On {{this.note_createdAt}}</div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{this.content}}</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="p-2">
+
+                    {{#each this.tags}}
+                    <span>{{this}}</span>
+
+                    {{/each}}
+                </div>
+                <div class="ml-auto p-2">
+                    <a style="color: rgb(255, 255, 255); background-color: #00829b;" href="/addPost/edit/{{editid}}" class="btn btn-info" role="button">Edit</a>
+                    <button onclick="delete_note(this, {{this._id}},{{@index}})" style="font-size:11px;color: rgb(255, 255, 255); background-color: #d4423c;" type="button"
+                        class="btn btn-danger">Delete</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" style="background-color: white;">
+            <div id={{@index}}>
+                {{#each this.comments}}
+                <div class="d-flex" style="background-color: #cccccc73;margin-bottom: 0.5%;border-radius: 11px;">
+                    <div class="p-2" style="text-transform: lowercase;color: #0062cc;">{{this.name}}</div>
+                    <div class="p-2" style="font-family: sans-serif;">{{this.description}}</div>
+                    <div class="ml-auto p-2">On {{this.commented_at}}</div>
+                </div>
+
+                {{/each}}
+
+            </div>
+            <div class="input-group">
+                <input style="background-color: white;" id={{this._id}} name={{this._id}} class="form-control"
+                    placeholder="Add a comment" type="text">
+                <span class="input-group-addon">
+                    <a onclick="add_comment(this, {{this._id}},{{this.userID}}, {{@index}})" data-toggle="tooltip"
+                        title="Add Comment" style="cursor: pointer;"><i class="fa fa-edit"></i></a>
+                </span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <ul class="list-group col-md-2 offset-3">
+        <li class="list-group-item list-group-item-primary" style="margin-left:35%;background-color: #0062cc78">
+            No Notes to show!
+        </li>
+    </ul>
+    {{/if}}
+</div>
+<script src="/js/addPost.js"></script>
